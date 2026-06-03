@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php *)",
+      "Bash(mysql -u root --port=3007 -h localhost)",
+      "Bash(Get-ChildItem -Path \"C:\\\\xampp\\\\htdocs\\\\isabel\" -Recurse -Force)",
+      "Bash(Select-Object -Property FullName, PSIsContainer)",
+      "Bash(ConvertTo-Json)",
+      "Bash(not exist *)"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+Options -Indexes
+Options -MultiViews
+
+# ─── Seguridad: Bloquear acceso a carpetas sensibles ───────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /PRACTICAS/
+
+    # Bloquear acceso directo a /config/, /src/, /cache/, /logs/
+    RewriteRule ^config/ - [F,L]
+    RewriteRule ^src/ - [F,L]
+    RewriteRule ^cache/ - [F,L]
+    RewriteRule ^logs/ - [F,L]
+
+    # Forzar index.html para rutas SPA (excepto /api/, /admin/, /assets/)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/PRACTICAS/api/
+    RewriteCond %{REQUEST_URI} !^/PRACTICAS/admin/
+    RewriteCond %{REQUEST_URI} !^/PRACTICAS/assets/
+    RewriteRule ^(?!api/|admin/|assets/).*$ index.html [L]
+</IfModule>
+
+# ─── Proteger archivos sensibles ───────────────────────────────────────────
+<FilesMatch "(\.env|\.log|\.sql|\.gitignore|composer\.json|composer\.lock|README\.md)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ─── Headers de seguridad ──────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://www.google.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com https://maps.googleapis.com https://maps.gstatic.com; frame-src https://www.google.com https://maps.google.com; connect-src 'self' https://api.groq.com;"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ─── Compresión GZIP ───────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json
+</IfModule>
+
+# ─── Cache de assets estáticos ─────────────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+</IfModule>
+
+# ─── Tipo MIME para JSON en /api/ ──────────────────────────────────────────
+<FilesMatch "\.php$">
+    <IfModule mod_rewrite.c>
+        RewriteCond %{REQUEST_URI} ^/PRACTICAS/api/
+        RewriteRule .* - [E=RESPONSE_CONTENT_TYPE:application/json]
+    </IfModule>
+</FilesMatch>
+
+# ─── Deshabilitar signature del servidor ──────────────────────────────────
+ServerSignature Off

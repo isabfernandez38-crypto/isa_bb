@@ -1,0 +1,144 @@
+/* ============================================================
+   MAICELO RESTOBAR — animations.css
+   ============================================================ */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(100px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-100px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.7); }
+  50%       { box-shadow: 0 0 0 15px rgba(201,168,76,0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -1000px 0; }
+  100% { background-position:  1000px 0; }
+}
+@keyframes dotsTyping {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%            { transform: translateY(-8px); }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) translateX(-50%); }
+  50%       { transform: translateY(-10px) translateX(-50%); }
+}
+@keyframes bounceSimple {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(201,168,76,0.2); }
+  50%       { border-color: rgba(201,168,76,0.8); }
+}
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes checkDraw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+/* ── Clases de utilidad ───────────────────────────────────── */
+.fade-in-up    { animation: fadeInUp    0.6s ease both; }
+.fade-in-down  { animation: fadeInDown  0.6s ease both; }
+.fade-in       { animation: fadeIn      0.6s ease both; }
+.slide-in-right{ animation: slideInRight 0.5s ease both; }
+.slide-in-left { animation: slideInLeft  0.5s ease both; }
+.scale-in      { animation: scaleIn     0.4s ease both; }
+.float-anim    { animation: float       3s ease-in-out infinite; }
+
+/* Delays escalonados */
+.delay-100  { animation-delay: 0.1s !important; }
+.delay-200  { animation-delay: 0.2s !important; }
+.delay-300  { animation-delay: 0.3s !important; }
+.delay-400  { animation-delay: 0.4s !important; }
+.delay-500  { animation-delay: 0.5s !important; }
+.delay-600  { animation-delay: 0.6s !important; }
+.delay-700  { animation-delay: 0.7s !important; }
+.delay-800  { animation-delay: 0.8s !important; }
+.delay-900  { animation-delay: 0.9s !important; }
+.delay-1000 { animation-delay: 1.0s !important; }
+.delay-1200 { animation-delay: 1.2s !important; }
+.delay-1500 { animation-delay: 1.5s !important; }
+
+/* Hero animaciones de entrada */
+.hero-eyebrow  { animation: fadeInUp 0.7s ease 0.3s both; }
+.hero-title    { animation: fadeInUp 0.8s ease 0.6s both; }
+.hero-subtitle { animation: fadeInUp 0.8s ease 0.9s both; }
+.hero-description { animation: fadeInUp 0.8s ease 1.2s both; }
+.hero-buttons  { animation: fadeInUp 0.8s ease 1.5s both; }
+.hero-scroll-indicator { animation: bounce 2s ease-in-out infinite; }
+
+/* Animación de borde dorado */
+.border-anim-gold {
+  animation: borderGlow 2s ease-in-out infinite;
+}
+
+/* Gold pulse sobre elemento */
+.pulse-gold {
+  animation: goldPulse 2s ease-in-out infinite;
+}
+
+/* Transición de page */
+.page-enter {
+  animation: fadeIn 0.5s ease;
+}
+
+/* Card hover con micro-interacción */
+.card-hover-lift {
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.card-hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+/* Parallax (aplicado desde JS) */
+.parallax-bg {
+  will-change: background-position;
+}
+
+/* Reducir movimiento para accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
