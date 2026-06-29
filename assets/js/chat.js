@@ -13,9 +13,9 @@ function generateUUID() {
 const sessionId = sessionStorage.getItem('chat_session_id') || generateUUID();
 sessionStorage.setItem('chat_session_id', sessionId);
 
-let chatAbierto    = false;
+let chatAbierto = false;
 let bienvenidaVisto = false;
-let enviando       = false;
+let enviando = false;
 
 // ── Inyectar HTML del chat ────────────────────────────────────────────────
 function inyectarChatHTML() {
@@ -60,9 +60,9 @@ function inyectarChatHTML() {
 
 // ── Abrir / cerrar chat ───────────────────────────────────────────────────
 function toggleChat() {
-  const panel  = document.getElementById('chatPanel');
+  const panel = document.getElementById('chatPanel');
   const bubble = document.getElementById('chatBubble');
-  const badge  = document.getElementById('chatBadge');
+  const badge = document.getElementById('chatBadge');
 
   chatAbierto = !chatAbierto;
   panel.style.display = chatAbierto ? 'flex' : 'none';
@@ -91,16 +91,16 @@ function addMessage(text, role, timestamp = null) {
   const container = document.getElementById('chatMessages');
   if (!container) return;
 
-  const ts   = timestamp || new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
-  const div  = document.createElement('div');
+  const ts = timestamp || new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+  const div = document.createElement('div');
   div.className = `chat-msg ${role}`;
 
   // Convertir saltos de línea en <br>
   const html = text
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/\n/g,'<br>')
-    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
-    .replace(/\*([^*]+)\*/g,'<em>$1</em>');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\n/g, '<br>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
   div.innerHTML = `${html}<span class="chat-msg-time">${ts}</span>`;
   container.appendChild(div);
@@ -113,7 +113,7 @@ function showTypingIndicator() {
   if (!container) return null;
   const el = document.createElement('div');
   el.className = 'typing-indicator';
-  el.id        = 'typingIndicator';
+  el.id = 'typingIndicator';
   el.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
   container.appendChild(el);
   container.scrollTop = container.scrollHeight;
@@ -130,24 +130,24 @@ async function sendMessage(text) {
   text = text.trim();
   if (!text || enviando) return;
 
-  const input   = document.getElementById('chatInput');
+  const input = document.getElementById('chatInput');
   const sendBtn = document.getElementById('chatSend');
-  const sugs    = document.getElementById('chatSuggestions');
+  const sugs = document.getElementById('chatSuggestions');
 
   enviando = true;
-  if (input)   { input.value = ''; input.style.height = 'auto'; }
-  if (sendBtn)  sendBtn.disabled = true;
-  if (sugs)     sugs.style.display = 'none';
+  if (input) { input.value = ''; input.style.height = 'auto'; }
+  if (sendBtn) sendBtn.disabled = true;
+  if (sugs) sugs.style.display = 'none';
 
   addMessage(text, 'user');
 
   const typing = showTypingIndicator();
 
   try {
-    const res = await fetch('/PRACTICAS/api/chat.php', {
-      method:  'POST',
+    const res = await fetch(`${BASE_URL}/api/chat.php`, {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ session_id: sessionId, message: text }),
+      body: JSON.stringify({ session_id: sessionId, message: text }),
     });
 
     removeTypingIndicator(typing);
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Auto-resize del textarea
-  document.getElementById('chatInput')?.addEventListener('input', function() {
+  document.getElementById('chatInput')?.addEventListener('input', function () {
     this.style.height = 'auto';
     this.style.height = Math.min(this.scrollHeight, 100) + 'px';
   });

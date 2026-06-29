@@ -53,7 +53,7 @@ try {
         } elseif (str_starts_with($p['imagen'], 'http')) {
             $p['imagen_url'] = $p['imagen'];
         } else {
-            $p['imagen_url'] = '/PRACTICAS/' . ltrim($p['imagen'], '/');
+            $p['imagen_url'] = APP_URL . '/' . ltrim($p['imagen'], '/');
         }
 
         $agrupado[$slug][] = $p;

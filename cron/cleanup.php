@@ -1,8 +1,8 @@
 <?php
 /**
  * M5: Script de mantenimiento — ejecutar cada 30 minutos via cron o Task Scheduler
- * Windows: schtasks /create /sc minute /mo 30 /tn "MaiceloCleanup" /tr "php C:\xampp\htdocs\isabel\cron\cleanup.php"
- * Linux:   * /30 * * * * php /var/www/html/isabel/cron/cleanup.php
+ * Windows: schtasks /create /sc minute /mo 30 /tn "MaiceloCleanup" /tr "php C:\xampp\htdocs\maicelo\cron\cleanup.php"
+ * Linux:   * /30 * * * * php /var/www/html/maicelo/cron/cleanup.php
  */
 declare(strict_types=1);
 

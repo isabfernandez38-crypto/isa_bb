@@ -1,493 +1,1946 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Maicelo Restobar – Cocina peruana criolla y marina en el corazón de San Isidro, Lima. Reserva tu mesa hoy.">
-  <meta name="keywords" content="restaurante, peruana, criolla, marina, san isidro, lima, maicelo restobar, ceviche, lomo saltado, parrillas">
-  <meta property="og:title" content="Maicelo Restobar – San Isidro, Lima">
-  <meta property="og:description" content="Donde la tradición criolla se encuentra con el sabor auténtico del Perú.">
-  <meta property="og:type" content="restaurant">
-  <title>Maicelo Restobar – San Isidro, Lima</title>
 
-  <!-- Bootstrap 5.3 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <!-- Font Awesome 6 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- Google Fonts -->
+  <!-- 
+    - primary meta tags sss
+  -->
+  <title>Devioz - Restobar</title>
+  <meta name="title" content="Devioz - Restobar">
+  <meta name="description" content="El mejor restobar">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./assets/images/logoweb.png" type="image/svg+xml">
+
+  <!-- 
+    - google font link
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
-  <!-- Estilos propios -->
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/animations.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/chat.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="./assets/images/hero-slider-1.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
+  <link rel="preload" as="image" href="./assets/images/hero-slider-3.jpg">
+
 </head>
-<body>
 
-<!-- ══ NAVBAR ══════════════════════════════════════════════════════════ -->
-<nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
-  <div class="container">
-    <a class="navbar-brand" href="#hero">
-      MAICELO
-      <span>RESTOBAR</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navMenu">
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
-        <li class="nav-item"><a class="nav-link" href="#hero">Inicio</a></li>
-        <li class="nav-item"><a class="nav-link" href="#menu">Menú</a></li>
-        <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
-        <li class="nav-item"><a class="nav-link" href="#reservas">Reservas</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
-        <li class="nav-item ms-lg-2">
-          <a class="btn-nav-gold" href="#reservas">Reservar</a>
-        </li>
-      </ul>
-    </div>
+<body id="top">
+
+  <!-- 
+    - #PRELOADER
+  -->
+
+  <div class="preload" data-preaload>
+    <div class="circle"></div>
   </div>
-</nav>
 
-<!-- ══ HERO ════════════════════════════════════════════════════════════ -->
-<section id="hero">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <span class="hero-eyebrow">COCINA PERUANA CRIOLLA • SAN ISIDRO, LIMA</span>
-    <h1 class="hero-title">Maicelo</h1>
-    <h2 class="hero-subtitle">Restobar</h2>
-    <p class="hero-description">
-      "Donde la tradición criolla se encuentra<br>con el sabor auténtico del Perú"
-    </p>
-    <div class="hero-buttons">
-      <a href="#reservas" class="btn-primary-gold">RESERVAR MESA</a>
-      <a href="#menu" class="btn-outline-gold">VER CARTA</a>
-    </div>
-  </div>
-  <div class="hero-scroll-indicator">
-    <i class="fas fa-chevron-down"></i>
-    <span>Scroll</span>
-  </div>
-</section>
+  <style>
+    /* Cambia el rojo por el dorado de la plantilla de nuevos cambios  */
+    .header::after,
+    .topbar::after {
+      background-color: #bc9658 !important;
+      background-image: none !important;
+    }
 
-<!-- ══ HIGHLIGHTS ══════════════════════════════════════════════════════ -->
-<section id="highlights">
-  <div class="container">
-    <div class="highlights-grid">
-      <div class="highlight-item animate-fade-up">
-        <div class="highlight-icon">🍽️</div>
-        <div class="highlight-number" data-target="15">0</div>
-        <div class="highlight-label">Años de Experiencia</div>
-      </div>
-      <div class="highlight-item animate-fade-up animate-delay-2">
-        <div class="highlight-icon">⭐</div>
-        <div class="highlight-number" data-target="4.9" data-decimal="1">0</div>
-        <div class="highlight-label">Calificación Google</div>
-      </div>
-      <div class="highlight-item animate-fade-up animate-delay-3">
-        <div class="highlight-icon">👨‍🍳</div>
-        <div class="highlight-number" data-target="80">0</div>
-        <div class="highlight-label">Platos en Carta</div>
-      </div>
-      <div class="highlight-item animate-fade-up animate-delay-4">
-        <div class="highlight-icon">🔥</div>
-        <div class="highlight-number" data-target="500">0</div>
-        <div class="highlight-label">Reseñas Google</div>
-      </div>
-    </div>
-  </div>
-</section>
+    .header {
+      border-bottom: 2px solid #bc9658 !important;
+    }
+  </style>
 
-<!-- ══ MENÚ ═════════════════════════════════════════════════════════════ -->
-<section id="menu">
-  <div class="container">
-    <div class="section-header animate-fade-up">
-      <span class="section-eyebrow">CARTA</span>
-      <div class="ornament-line"><span class="text-gold">✦</span></div>
-      <h2 class="section-title">Nuestra Carta</h2>
-      <p class="section-subtitle">Descubre los sabores auténticos de Maicelo</p>
-    </div>
 
-    <!-- Tabs de categorías -->
-    <div class="menu-tabs" id="menuTabs">
-      <!-- Las tabs se generan desde JS -->
-    </div>
 
-    <!-- Título de categoría actual -->
-    <h3 class="menu-categoria-titulo" id="menuCategoriaTitulo"></h3>
+  <!-- 
+    - #TOP BAR
+  -->
 
-    <!-- Grid de platos -->
-    <div class="menu-grid" id="menuGrid">
-      <!-- Skeleton loaders -->
-      <div class="skeleton skeleton-card"></div>
-      <div class="skeleton skeleton-card"></div>
-      <div class="skeleton skeleton-card"></div>
-      <div class="skeleton skeleton-card"></div>
-      <div class="skeleton skeleton-card"></div>
-      <div class="skeleton skeleton-card"></div>
-    </div>
+  <!-- 
+    - #HEADER
+  -->
 
-    <!-- Navegación por secciones -->
-    <div class="menu-navegacion">
-      <button id="btnAnterior" class="btn-nav-menu" onclick="navegarCategoria(-1)">
-        ← Anterior
-      </button>
-      <span id="indicadorMenu" class="menu-indicador">
-        Sección 1 de 11
-      </span>
-      <button id="btnSiguiente" class="btn-nav-menu" onclick="navegarCategoria(1)">
-        Siguiente →
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- ══ NOSOTROS ════════════════════════════════════════════════════════ -->
-<section id="nosotros" class="section-dark">
-  <div class="container">
-    <div class="row align-items-center g-5">
-      <div class="col-lg-5 animate-fade-up">
-        <div class="nosotros-img-wrapper">
-          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Maicelo Restobar interior" loading="lazy">
-        </div>
-      </div>
-      <div class="col-lg-7 animate-fade-up animate-delay-2">
-        <div class="nosotros-text">
-          <span class="section-eyebrow">NUESTRA HISTORIA</span>
-          <h2>Tradición Criolla en el<br>Corazón de San Isidro</h2>
-          <p>Maicelo Restobar nació de la pasión por los sabores auténticos del Perú. En el corazón de San Isidro, reunimos lo mejor de la cocina criolla, marina y de barrio en un ambiente moderno y acogedor donde cada plato cuenta una historia.</p>
-          <p>Desde nuestro emblemático Cuatro Colores hasta las Parrillas Maicelo, cada receta honra la tradición culinaria peruana con ingredientes frescos y técnicas que pasan de generación en generación.</p>
-          <div class="pillares-grid">
-            <div class="pilar-item">
-              <div class="pilar-icon">🏆</div>
-              <div class="pilar-titulo">Calidad</div>
-            </div>
-            <div class="pilar-item">
-              <div class="pilar-icon">🇵🇪</div>
-              <div class="pilar-titulo">Tradición</div>
-            </div>
-            <div class="pilar-item">
-              <div class="pilar-icon">✨</div>
-              <div class="pilar-titulo">Experiencia</div>
-            </div>
+  <header class="header" data-header>
+    <div class="topbar-content-wrapper">
+      <div class="topbar-group">
+        <address class="topbar-item">
+          <div class="icon">
+            <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
           </div>
-          <div class="mv-grid mt-4">
-            <div class="mv-card">
-              <h4>🎯 Misión</h4>
-              <p>Ofrecer una experiencia gastronómica auténtica que honre los sabores del Perú, con calidad, calidez y pasión en cada plato.</p>
-            </div>
-            <div class="mv-card">
-              <h4>👁️ Visión</h4>
-              <p>Ser el restobar criollo de referencia en Lima, reconocido por la calidad de su cocina y la calidez de su atención.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ══ RESERVAS ════════════════════════════════════════════════════════ -->
-<section id="reservas">
-  <div class="container">
-    <div class="section-header animate-fade-up">
-      <span class="section-eyebrow">RESERVACIONES</span>
-      <div class="ornament-line"><span class="text-gold">✦</span></div>
-      <h2 class="section-title">Reserva Tu Mesa</h2>
-      <p class="section-subtitle">Garantiza tu lugar en Maicelo Restobar</p>
-    </div>
-
-    <div class="row g-4">
-      <!-- Formulario -->
-      <div class="col-lg-7 animate-fade-up">
-        <div class="reservas-form-card">
-          <form id="reservaForm" novalidate>
-            <input type="hidden" id="csrfToken" name="csrf_token">
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label">Nombre Completo *</label>
-                <input type="text" id="inputNombre" name="nombre_cliente" class="form-control" placeholder="Tu nombre completo" required>
-                <div class="invalid-feedback">Mínimo 2 caracteres, sin números.</div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Teléfono *</label>
-                <div class="input-group">
-                  <span class="input-group-text" style="background:rgba(255,255,255,0.04);border-color:var(--border-gold);color:var(--text-secondary);">+51</span>
-                  <input type="tel" id="inputTelefono" name="telefono" class="form-control" placeholder="9XXXXXXXX" required>
-                </div>
-                <div class="invalid-feedback" id="telError">9 dígitos, empieza con 9.</div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Correo Electrónico</label>
-                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="opcional">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Fecha *</label>
-                <input type="date" id="inputFecha" name="fecha" class="form-control" required>
-                <div class="invalid-feedback">Selecciona una fecha válida.</div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Hora *</label>
-                <select id="inputHora" name="hora" class="form-select" required>
-                  <option value="">Selecciona la fecha primero</option>
-                </select>
-                <div class="invalid-feedback">Selecciona una hora.</div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Número de Personas *</label>
-                <div class="personas-counter">
-                  <button type="button" class="personas-btn" id="personasMenos">−</button>
-                  <span class="personas-display" id="personasDisplay">2</span>
-                  <input type="hidden" id="inputPersonas" name="num_personas" value="2">
-                  <button type="button" class="personas-btn" id="personasMas">+</button>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Zona Preferida</label>
-                <select name="zona" id="inputZona" class="form-select">
-                  <option value="">Sin preferencia</option>
-                  <option value="interior">Interior</option>
-                  <option value="exterior">Exterior</option>
-                  <option value="bar">Bar</option>
-                  <option value="vip">VIP</option>
-                </select>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Comentarios</label>
-                <input type="text" name="comentarios" id="inputComentarios" class="form-control" placeholder="Alergias, ocasión especial...">
-              </div>
-              <div class="col-12">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="chkTerminos" required>
-                  <label class="form-check-label" for="chkTerminos">
-                    Acepto las <a href="#" data-bs-toggle="modal" data-bs-target="#modalTerminos">políticas de reserva</a>
-                  </label>
-                </div>
-              </div>
-              <div class="col-12">
-                <button type="submit" class="btn-primary-gold w-100" id="btnReservar">
-                  CONFIRMAR RESERVA
-                </button>
-              </div>
-            </div>
-          </form>
+          <span class="span">
+            <a href="https://www.rappi.com.pe/restaurantes/58229-maicelo-restobar?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnxpvSw_xrVaAhvWv4uXfxQ7ltzHpAYUedo3m7PbNCKDlvk5RUKIfxvu_srJs_aem_aJPEs_RPUAn8ho4bJc6l_Q"
+              target="_blank">Ubicamos para el delivery</a>
+          </span>
+        </address>
+        <div class="separator"></div>
+        <div class="topbar-item">
+          <div class="icon"><ion-icon name="time-outline"></ion-icon></div>
+          <span class="span">Horario : 8.00 am a 10.00 pm</span>
         </div>
       </div>
 
-      <!-- Info -->
-      <div class="col-lg-5 animate-fade-up animate-delay-2">
-        <div class="reservas-info-card">
-          <h5 class="text-gold mb-3" style="font-family:var(--font-display);letter-spacing:2px;font-size:0.85rem;text-transform:uppercase;">
-            <i class="fas fa-clock me-2"></i>Horarios
-          </h5>
-          <ul class="horario-list mb-3" id="horariosList">
-            <li class="horario-item"><span class="dia">Cargando...</span></li>
-          </ul>
+      <div class="separator-central"></div>
 
-          <hr style="border-color:var(--border-gold);opacity:0.3;margin:1.25rem 0;">
-
-          <div class="contacto-info-item" style="padding-top:0;">
-            <div class="contacto-info-icon"><i class="fas fa-map-marker-alt"></i></div>
-            <div class="contacto-info-text">
-              <strong>Dirección</strong>
-              <span>Calle Armando Blondet 149, San Isidro, Lima</span>
-            </div>
-          </div>
-
-          <a href="https://wa.me/51991917732?text=Hola,%20quisiera%20hacer%20una%20reserva" target="_blank" class="btn-whatsapp mt-3">
-            <i class="fab fa-whatsapp"></i>
-            Contactar por WhatsApp
-          </a>
-
-          <div class="mt-3" style="background:rgba(201,168,76,0.06);border:1px solid var(--border-gold);border-radius:8px;padding:1rem;">
-            <p style="font-size:0.78rem;color:var(--text-secondary);margin:0;line-height:1.6;">
-              <i class="fas fa-info-circle text-gold me-1"></i>
-              Las reservas se confirman automáticamente. Para cancelaciones, contáctanos con al menos <strong class="text-gold">2 horas de anticipación</strong>.
-            </p>
-          </div>
-        </div>
+      <div class="topbar-group">
+        <a href="tel:+51991917732" class="topbar-item link">
+          <div class="icon"><ion-icon name="call-outline"></ion-icon></div>
+          <span class="span">+51 991 917 732</span>
+        </a>
+        <div class="separator"></div>
+        <a href="mailto:maiceloboxer1@gmail.com" class="topbar-item link">
+          <div class="icon"><ion-icon name="mail-outline"></ion-icon></div>
+          <span class="span">maiceloboxer1@gmail.com</span>
+        </a>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ══ CONTACTO ════════════════════════════════════════════════════════ -->
-<section id="contacto" class="section-dark">
-  <div class="container">
-    <div class="section-header animate-fade-up">
-      <span class="section-eyebrow">UBÍCANOS</span>
-      <div class="ornament-line"><span class="text-gold">✦</span></div>
-      <h2 class="section-title">Encuéntranos</h2>
-    </div>
-    <div class="row g-5">
-      <div class="col-lg-5 animate-fade-up">
-        <div class="contacto-info-item">
-          <div class="contacto-info-icon"><i class="fas fa-map-marker-alt"></i></div>
-          <div class="contacto-info-text">
-            <strong>Dirección</strong>
-            <span>Calle Armando Blondet 149<br>San Isidro, Lima, Perú</span>
-          </div>
-        </div>
-        <div class="contacto-info-item">
-          <div class="contacto-info-icon"><i class="fas fa-phone"></i></div>
-          <div class="contacto-info-text">
-            <strong>Teléfono / WhatsApp</strong>
-            <span>+51 991 917 732</span>
-          </div>
-        </div>
-        <div class="contacto-info-item">
-          <div class="contacto-info-icon"><i class="fas fa-envelope"></i></div>
-          <div class="contacto-info-text">
-            <strong>Correo</strong>
-            <span>info@maicelorestbar.com</span>
-          </div>
-        </div>
-        <div class="contacto-info-item" style="border-bottom:none;">
-          <div class="contacto-info-icon"><i class="fas fa-clock"></i></div>
-          <div class="contacto-info-text">
-            <strong>Horario General</strong>
-            <span>Lun–Dom: 12:00pm – 12:00am</span>
-          </div>
-        </div>
+    <div class="container">
 
-        <a href="https://wa.me/51991917732" target="_blank" class="btn-whatsapp mt-4">
-          <i class="fab fa-whatsapp"></i>
-          Escríbenos por WhatsApp
+      <a href="#" class="logo">
+        <img src="./assets/images/logomejorado1.png" width="200" height="50" alt="Grilli - Home">
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <button class="close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+
+        <a href="#" class="logo">
+          <img src="./assets/images/logomejorado1.png" width="160" height="50" alt="Grilli - Home">
         </a>
 
-        <div class="social-links mt-2">
-          <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-          <a href="https://maps.app.goo.gl/KVWMRNe14V4zbLyf8" target="_blank" class="social-link" aria-label="Google Maps"><i class="fab fa-google"></i></a>
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="#home" class="navbar-link hover-underline active">
+              <div class="separator"></div>
+
+              <span class="span">INICIO</span>
+            </a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#menu" class="navbar-link hover-underline">
+              <div class="separator"></div>
+
+              <span class="span">Menus</span>
+            </a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#about" class="navbar-link hover-underline">
+              <div class="separator"></div>
+
+              <span class="span">Nosotros</span>
+            </a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#chefs" class="navbar-link hover-underline">
+              <div class="separator"></div>
+
+              <span class="span">Los Chefs</span>
+            </a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#reservation" class="navbar-link hover-underline">
+              <div class="separator"></div>
+
+              <span class="span">Contáctanos</span>
+            </a>
+          </li>
+
+        </ul>
+
+        <div class="text-center">
+          <p class="headline-1 navbar-title">Visitanos</p>
+
+          <address class="body-4">
+            Av. Marina 1234, <br> Pueblo Libre / Callao, Lima - Perú
+          </address>
+
+          <p class="body-4 navbar-text">Martes a Domingo <br>12:00 pm - 11:00 pm</p>
+
+          <a href="mailto:maiceloboxer1@gmail.com" class="body-4 sidebar-link">maiceloboxer1@gmail.com</a>
+
+          <div class="separator"></div>
+
+          <p class="contact-label">Solicitud de Reserva</p>
+
+          <a href="tel:+51 900 000 000" class="body-1 contact-number hover-underline">
+            +51 900 000 000
+          </a>
+        </div>
+
+      </nav>
+
+      <a href="#" class="btn btn-secondary">
+        <span class="text text-1">¡Vamos a comer!</span>
+
+        <span class="text text-2" aria-hidden="true">¡Vamos a comer!</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </button>
+
+      <div class="overlay" data-nav-toggler data-overlay></div>
+
+    </div>
+
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="hero text-center" aria-label="home" id="home">
+
+        <ul class="hero-slider" data-hero-slider>
+
+          <li class="slider-item active" data-hero-slider-item>
+
+            <!-- imagen fondo 1 -->
+            <div class="slider-bg">
+              <img src="./assets/images/maicelo2.jpg" width="1880" height="950" alt="" class="img-cover">
+            </div>
+
+            <p class="label-2 section-subtitle slider-reveal">Batería fina</p>
+
+            <h1 class="display-1 hero-title slider-reveal">
+              Aquí se come como <br>
+              los dioses de verdad
+            </h1>
+          </li>
+
+        </ul>
+
+        <button class="slider-btn prev" aria-label="slide to previous" data-prev-btn>
+          <ion-icon name="chevron-back"></ion-icon>
+        </button>
+
+        <button class="slider-btn next" aria-label="slide to next" data-next-btn>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </button>
+
+
+        <!-- <a href="#" class="hero-btn has-after">
+          <img src="./assets/images/logomejorado1.png" width="48" height="48">
+
+          <span class="label-2 text-center span">Book A Table</span>
+        </a> -->
+
+        <a href="#" class="hero-btn has-after"
+          style="background: transparent; border: none; display: flex; justify-content: center; align-items: center; width: 160px; height: 160px;">
+
+          <img src="./assets/images/logomejorado1.png" alt="Logo Maicelo Restobar"
+            style="width: 170px; height: auto; position: relative; z-index: 10; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6)); pointer-events: none;">
+
+          <span class="label-2 text-center span" style="background: transparent; border: none;"></span>
+        </a>
+
+      </section>
+
+
+
+
+
+      <!-- 
+        - #SERVICE
+      -->
+
+      <section class="section service bg-black-10 text-center" aria-label="service">
+
+        <img src="./assets/images/fuego1.png" width="246" height="412" loading="lazy" alt="shape"
+          class="shape shape-1 move-anim">
+        <img src="./assets/images/fuego2.png" width="343" height="345" loading="lazy" alt="shape"
+          class="shape shape-2 move-anim">
+
+        <div class="container">
+
+          <p class="section-subtitle label-2">¡Come como los dioses!</p>
+
+          <h2 class="headline-1 section-title">El Ring del Sabor</h2>
+
+          <p class="section-text">
+            Sabor auténtico, porciones de campeón y barrio fino.
+            De los puños a los sartenes, servimos la mejor bajona
+            de Lima y los tragos más bravos para la batería seria.
+          </p>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="service-card">
+
+                <a href="#" class="has-before hover:shine">
+                  <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
+                    <img src="./assets/images/trago1.jpg" width="285" height="336" loading="lazy" alt="Breakfast"
+                      class="img-cover">
+                  </figure>
+                </a>
+
+                <div class="card-content">
+
+                  <h3 class="title-4 card-title">
+                    <a href="#">Pócimas de Barrio</a>
+                  </h3>
+
+                  <a href="#" class="btn-text hover-underline label-2">Ver Menú</a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <a href="#" class="has-before hover:shine">
+                  <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
+                    <img src="./assets/images/plato4.jpg" width="285" height="336" loading="lazy" alt="Appetizers"
+                      class="img-cover">
+                  </figure>
+                </a>
+
+                <div class="card-content">
+
+                  <h3 class="title-4 card-title">
+                    <a href="#">Checkea la carta</a>
+                  </h3>
+
+                  <a href="#" class="btn-text hover-underline label-2">Ver Menú</a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <a href="#" class="has-before hover:shine">
+                  <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
+                    <img src="./assets/images/trago3.jpg" width="285" height="336" loading="lazy" alt="Drinks"
+                      class="img-cover">
+                  </figure>
+                </a>
+
+                <div class="card-content">
+
+                  <h3 class="title-4 card-title">
+                    <a href="#">Tragos Bravos</a>
+                  </h3>
+
+                  <a href="#" class="btn-text hover-underline label-2">Ver Menú</a>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #ABOUT
+      -->
+
+      <section class="section about text-center" aria-labelledby="about-label" id="about">
+        <div class="container">
+
+          <div class="about-content">
+
+            <p class="label-2 section-subtitle" id="about-label">Nuestra historia</p>
+
+            <h2 class="headline-1 section-title">El sabor de nuestra historia</h2>
+
+            <p class="section-text">
+              Del ring a tu mesa. Maicelo Restobar nace de la mano de Jonathan Maicelo con una sola misión:
+              ofrecer el sabor real del barrio con la disciplina de un deportista de élite. Comida de verdad,
+              porciones de verdad y gente de verdad. 100% peruano, 100% calle.
+            </p>
+
+            <div class="contact-label">Llama y reserva</div>
+
+            <a href="tel:+51 900 000 000" class="body-1 contact-number hover-underline">+51 900 000 000</a>
+
+            <a href="#" class="btn btn-primary">
+              <span class="text text-1">Leer más</span>
+
+              <span class="text text-2" aria-hidden="true">Chequea, causa</span>
+            </a>
+
+          </div>
+
+          <figure class="about-banner">
+
+            <img src="./assets/images/about-banner-2.jpeg" width="570" height="570" loading="lazy" alt="about banner"
+              class="w-100" data-parallax-item data-parallax-speed="1">
+
+            <div class="abs-img abs-img-1 has-before" data-parallax-item data-parallax-speed="1.75">
+              <img src="./assets/images/about-abs-image-2.jpg" width="285" height="285" loading="lazy" alt=""
+                class="w-100">
+            </div>
+
+            <div class="abs-img abs-img-2 has-before">
+              <img src="./assets/images/badge-3.png" width="133" height="134" loading="lazy" alt="">
+            </div>
+
+          </figure>
+
+          <img src="./assets/images/shape-3.png" width="197" height="194" loading="lazy" alt="" class="shape"
+            style="z-index: 1;">
+
+          <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="shape"
+            class="shape shape-2 move-anim" style="top: 0; left: 0; width: 70%; z-index: -1;">
+          <img src="./assets/images/shape-6.png" width="343" height="345" loading="lazy" alt="shape"
+            class="shape shape-3 move-anim"
+            style="bottom: 0; right: 0; top: auto; left: auto; width: 70%; z-index: -1;">
+
+        </div>
+      </section>
+
+
+
+      <!-- 
+        - #SPECIAL DISH
+      -->
+
+      <section class="special-dish text-center" aria-labelledby="dish-label">
+
+        <div class="special-dish-banner">
+          <img src="./assets/images/lomito2.jpg" width="940" height="900" loading="lazy" alt="special dish"
+            class="img-cover">
+        </div>
+
+        <div class="special-dish-content bg-black-10">
+          <div class="container">
+
+            <img src="./assets/images/badge-1.png" width="28" height="41" loading="lazy" alt="badge" class="abs-img">
+
+            <p class="section-subtitle label-2">Plato Especial</p>
+
+            <h2 class="headline-1 section-title">Lomo Saltado</h2>
+
+            <p class="section-text">
+              "El corazón de nuestra cocina criolla. Jugosos trozos de lomo fino salteados al wok con cebolla morada,
+              tomates frescos y un toque de cilantro, servido con papas fritas crujientes y arroz con choclo. El sabor
+              ahumado que te hará volver por más."
+            </p>
+
+            <div class="wrapper">
+              <del class="del body-3">S/ 40.00</del>
+
+              <span class="span body-1">S/ 38.00</span>
+            </div>
+
+            <a href="#" class="btn btn-primary">
+              <span class="text text-1">Ver todo el Menú</span>
+
+              <span class="text text-2" aria-hidden="true">Ver todo el Menú</span>
+            </a>
+
+          </div>
+        </div>
+
+        <img src="./assets/images/shape-4.png" width="179" height="359" loading="lazy" alt="" class="shape shape-1">
+
+      </section>
+
+      <section class="special-dish text-center" aria-labelledby="dish-label">
+
+        <div class="special-dish-content bg-black-10">
+          <div class="container">
+
+            <img src="./assets/images/badge-1.png" width="28" height="41" loading="lazy" alt="badge" class="abs-img">
+
+            <p class="section-subtitle label-2">Plato Especial</p>
+
+            <h2 class="headline-1 section-title">Ceviche</h2>
+
+            <p class="section-text">
+              Nuestro ceviche clásico preparado con pescado fresco, limón de pica, cebolla morada y el toque secreto de
+              la casa. Disfruta de la frescura del mar en cada bocado.
+            </p>
+
+            <div class="wrapper">
+              <del class="del body-3">S/ 38.00</del>
+              <span class="span body-1">S/ 32.00</span>
+            </div>
+
+            <a href="#" class="btn btn-primary">
+              <span class="text text-1">Ver todo el Menú</span>
+              <span class="text text-2" aria-hidden="true">Ver todo el Menú</span>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="special-dish-banner">
+          <img src="./assets/images/special-dish-banner2.jpg" width="940" height="900" loading="lazy" alt="special dish"
+            class="img-cover">
+        </div>
+
+        <img src="./assets/images/shape-4.png" width="179" height="359" loading="lazy" alt="" class="shape shape-1">
+        <img src="./assets/images/shape-9.png" width="351" height="462" loading="lazy" alt="" class="shape shape-2">
+
+      </section>
+
+      <section class="special-dish text-center" aria-labelledby="dish-label">
+
+        <div class="special-dish-banner">
+          <img src="./assets/images/causa.jpg" width="940" height="900" loading="lazy" alt="special dish"
+            class="img-cover">
+        </div>
+
+        <div class="special-dish-content bg-black-10">
+          <div class="container">
+
+            <img src="./assets/images/badge-1.png" width="28" height="41" loading="lazy" alt="badge" class="abs-img">
+
+            <p class="section-subtitle label-2">Plato Especial</p>
+
+            <h2 class="headline-1 section-title">Causa</h2>
+
+            <p class="section-text">
+              "Una explosión de texturas y colores. Nuestra causa está hecha con una suave masa de papa amarilla y ají
+              amarillo, rellena con un cremoso mix de pollo (o atún), palta fresca y bañada con un toque de mayonesa
+              artesanal. El equilibrio perfecto entre suavidad y sabor."
+            </p>
+
+            <div class="wrapper">
+              <del class="del body-3">S/ 40.00</del>
+
+              <span class="span body-1">S/ 38.00</span>
+            </div>
+
+            <a href="#" class="btn btn-primary">
+              <span class="text text-1">Ver todo el Menú</span>
+
+              <span class="text text-2" aria-hidden="true">Ver todo el Menú</span>
+            </a>
+
+          </div>
+        </div>
+
+        <img src="./assets/images/shape-4.png" width="179" height="359" loading="lazy" alt="" class="shape shape-1">
+
+        <img src="./assets/images/shape-9.png" width="351" height="462" loading="lazy" alt="" class="shape shape-2">
+
+      </section>
+
+
+
+      <!-- 
+        - #MENU
+      -->
+
+      <section class="section menu" aria-label="menu-label" id="menu">
+        <div class="container">
+
+          <p class="section-subtitle text-center label-2">DIRECTO AL PALADAR</p>
+
+          <h2 class="headline-1 section-title text-center">SABOR QUE TE DEJA KO</h2>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/cevichenuevo.jpg" width="100" height="100" loading="lazy" alt="Greek Salad"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Ceviche</a>
+                    </h3>
+
+                    <span class="badge label-1"></span>
+
+                    <span class="span title-2">S/ 35.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Pescado fresco del día, limón norteño y ese ajicito que te despierta los sentidos. ¡Puro sabor
+                    real!.
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/triomarino.jpg" width="100" height="100" loading="lazy" alt="Lasagne"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Trío Marino Elegante</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 45.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Para los que quieren todo: Ceviche, Arroz con Mariscos y Chicharrón de Pescado. ¡Un golpe triple!
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/lomosaltadonuevo.jpg" width="100" height="100" loading="lazy"
+                    alt="Butternut Pumpkin" class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Lomo Saltado con Clase</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 38.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Jugosos trozos de lomo fino salteados al wok con cebolla, tomate y papas amarillas bien crujientes.
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/tallarinnuevo.jpg" width="100" height="100" loading="lazy"
+                    alt="Tokusen Wagyu" class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Tallarín Saltado de Lomo</a>
+                    </h3>
+
+
+                    <span class="span title-2">S/ 36.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Pasta al dente salteada con lomo fino y vegetales frescos. Sabor de barrio con técnica de experto
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/Mariscos.jpg" width="100" height="100" loading="lazy" alt="Olivas Rellenas"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Arroz con Mariscos</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 32.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Un festín marino bien ganadazo: arroz meloso con mixtura de mariscos y el punto exacto de ají
+                    amarillo.
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/tacutacu.jpg" width="100" height="100" loading="lazy" alt="Opu Fish"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Tacu Tacu</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 40.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    La combinación perfecta de frejol y arroz bien frito, bañado en el juguito del lomo saltado de la
+                    casa.
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          <h2 class="headline-1 section-title text-center">PARA CALENTAR EL BRAZO</h2>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/tequeños1.jpg" width="100" height="100" loading="lazy" alt="Greek Salad"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Tequeños de Lomo Saltado</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 12.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Es el piqueo insignia. A diferencia del tequeño de queso común, este es más contundente porque lleva
+                    el relleno del plato bandera peruano
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/alitas1.jpg" width="100" height="100" loading="lazy" alt="Lasagne"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Alitas Acevichadas</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 15.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    El toque de Maicelo. Son alitas fritas bañadas en una salsa cremosa de ceviche (limón, ají y un
+                    toque de kion), lo que las hace ideales para acompañar una cerveza.
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/Choritos1.jpg" width="100" height="100" loading="lazy"
+                    alt="Butternut Pumpkin" class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Choritos a la Chalaca</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 15.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Un clásico marino. Son frescos, ácidos y picantes; perfectos para abrir el apetito sin llenarse
+                    demasiado antes del plato fuerte.
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/causa1.jpg" width="100" height="100" loading="lazy" alt="Tokusen Wagyu"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Causa Acevichada</a>
+                    </h3>
+
+
+                    <span class="span title-2">S/ 39.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Servida usualmente en porciones pequeñas o "bolitas", combina la masa de papa amarilla con una
+                    corona de ceviche encima.
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/chicharon1.jpg" width="100" height="100" loading="lazy"
+                    alt="Olivas Rellenas" class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Chicharrón de Pota</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 25.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Es el piqueo "guerrero" por excelencia. Crujiente, barato y perfecto para compartir al centro de la
+                    mesa con harta salsa criolla
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/anticucho1.jpg" width="100" height="100" loading="lazy" alt="Opu Fish"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Anticuchos de Corazón</a>
+                    </h3>
+
+                    <span class="span title-2">$49.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Aunque es casi un plato, en su restobar sale mucho como piqueo central (brochetas) para que cada uno
+                    agarre un palito mientras fluye la charla
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+          <h2 class="headline-1 section-title text-center">HIDRATACIÓN DE CAMPEONES</h2>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/chicha1.jpg" width="100" height="100" loading="lazy" alt="Greek Salad"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Chicha Morada </a>
+                    </h3>
+
+                    <span class="badge label-1"></span>
+
+                    <span class="span title-2">S/ 15.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "La receta de la Vicky. Maíz morado del bueno, piña y ese toque secreto que te devuelve la vida.
+                    ¡Bien taipá!".
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/limonadafro2.jpg" width="100" height="100" loading="lazy" alt="Lasagne"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Limonada Frozen</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 15.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    Para los que quieren todo: Ceviche, Arroz con Mariscos y Chicharrón de Pescado. ¡Un golpe triple!
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/maracuya1.jpg" width="100" height="100" loading="lazy"
+                    alt="Butternut Pumpkin" class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Refresco de Maracuyá</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 17.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "Pura fruta de la pasión para refrescar el bacho. Ácida, heladita y con el punche que necesitas.".
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/hierba1.jpg" width="100" height="100" loading="lazy" alt="Tokusen Wagyu"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Limonada de Hierbaluisa</a>
+                    </h3>
+
+
+                    <span class="span title-2">S/ 16.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "El aroma del barrio en un vaso. Relajante y fresquísima, perfecta para acompañar cualquier piqueo."
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/fruta2.jpg" width="100" height="100" loading="lazy" alt="Olivas Rellenas"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title"></a>Emoliente Frutado</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 12.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "Para cerrar bien la jornada. Con su linaza, cebada y harta fruta para que recuperes energías como
+                    un grande."
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/te1.jpg" width="100" height="100" loading="lazy" alt="Opu Fish"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Té Helado</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 12.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "Nuestro mix de la casa con harto hielo y rodajas de limón. Ligero y con clase, para los que saben."
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+          <h2 class="headline-1 section-title text-center">LA ARTILLERÍA PESADA</h2>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/pisco1.jpg" width="100" height="100" loading="lazy" alt="Greek Salad"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Pisco Sour</a>
+                    </h3>
+
+                    <span class="badge label-1"></span>
+
+                    <span class="span title-2">S/ 25.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "Nuestro orgullo nacional. Bien batido, con su espuma firme y el equilibrio exacto para que no te me
+                    vayas a la lona al primer round."
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/chica1.jpg" width="100" height="100" loading="lazy" alt="Lasagne"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Chilcano Clásico</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 19.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "Pisco del bueno, Ginger Ale heladita y harto limón. El trago que no cansa, para quedarte toda la
+                    tarde hablando con la gente."
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/mara1.jpg" width="100" height="100" loading="lazy" alt="Butternut Pumpkin"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Maracuyá Sour</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 22.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "La combinación perfecta entre el punche del pisco y la acidez de la fruta. Dulcecito pero
+                    traicionero, ¡cuidado que te tumba!"
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/chilcanodekion1.jpg" width="100" height="100" loading="lazy"
+                    alt="Tokusen Wagyu" class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Chilcano de Kion</a>
+                    </h3>
+
+
+                    <span class="span title-2">S/ 19.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "Con ese picantito del kion que te despierta los sentidos. Refrescante, con calle y mucha
+                    personalidad."
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/capitan1.jpg" width="100" height="100" loading="lazy" alt="Olivas Rellenas"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Capitán</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 22.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "Pisco con Vermut rojo. Un trago corto, fuerte y con clase, como los campeones de la vieja escuela."
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src="./assets/images/gin1.jpg" width="100" height="100" loading="lazy" alt="Opu Fish"
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">Gin Tonic de la Casa</a>
+                    </h3>
+
+                    <span class="span title-2">S/ 20.00</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    "Para los que buscan algo fino. Con sus botánicos y rodajas de fruta para que refresques la garganta
+                    con estilo."
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+
+          <p class="menu-text text-center">
+            Atención diaria de <span class="span">7:00 pm</span> a <span class="span">9:00 pm</span>
+          </p>
+
+          <a href="#" class="btn btn-primary">
+            <span class="text text-1">Ver todo el menú</span>
+            <span class="text text-2" aria-hidden="true">Ver todo el menú</span>
+          </a>
+
+          <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="shape"
+            class="shape shape-2 move-anim">
+          <img src="./assets/images/shape-6.png" width="343" height="345" loading="lazy" alt="shape"
+            class="shape shape-3 move-anim">
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #TESTIMONIALS
+      -->
+
+      <section class="section testi text-center has-bg-image"
+        style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./assets/images/testimonial-bg.jpg')"
+        aria-label="testimonios">
+
+        <div class="quote" aria-hidden="true">”</div>
+
+        <figure>
+          <blockquote lang="es">
+            <p class="headline-2 testi-text">
+              "La comida está en su punto y el ambiente tiene toda la actitud. Es el lugar fijo para los que buscan
+              sabor real y sin rodeos. ¡Simplemente otra cosita!"
+            </p>
+          </blockquote>
+
+          <div class="wrapper">
+            <div class="separator"></div>
+            <div class="separator"></div>
+            <div class="separator"></div>
+          </div>
+
+          <figcaption class="profile">
+            <img src="./assets/images/testi-avatar.jpg" width="100" height="100" loading="lazy" alt="Cliente satisfecho"
+              class="img">
+
+            <p class="label-2 profile-name">Jonathan Maicelo</p>
+            <small class="body-4">Socio del Sabor</small>
+          </figcaption>
+        </figure>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #RESERVATION
+      -->
+
+
+      <section class="reservation" id="reservation">
+        <div class="container">
+
+          <div class="form reservation-form bg-black-10">
+
+            <form action="" id="reservaForm" class="form-left">
+
+              <h2 class="headline-1 text-center">Separa tu Mesa</h2>
+
+              <p class="form-text text-center">
+                Reservas por fono al <a href="tel:+51991917732" class="link">+51 991 917 732</a> <br>
+                o completa el formulario, ¡al toque!
+              </p>
+
+              <div class="input-wrapper">
+                <input type="text" name="name" id="inputNombre" placeholder="Tu nombre" autocomplete="off" class="input-field" required>
+
+                <input type="tel" name="phone" id="inputTelefono" placeholder="Número de celular" autocomplete="off" class="input-field"
+                  required>
+              </div>
+
+              <div class="input-wrapper">
+
+                <!-- Personas -->
+                <div class="icon-wrapper">
+                  <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                  <select name="person" id="inputPersonas" class="input-field" aria-label="Cantidad de personas">
+                    <option value="1">1 Persona</option>
+                    <option value="2" selected>2 Personas</option>
+                    <option value="3">3 Personas</option>
+                    <option value="4">4 Personas</option>
+                    <option value="5">5 Personas</option>
+                    <option value="6">6 Personas</option>
+                    <option value="7">7 Personas</option>
+                    <option value="8">8 Personas (Máximo)</option>
+                  </select>
+                  <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
+                </div>
+
+                <!-- Fecha -->
+                <div class="icon-wrapper">
+                  <ion-icon name="calendar-clear-outline" aria-hidden="true"></ion-icon>
+                  <input type="date" name="reservation-date" id="inputFecha" class="input-field" required>
+                  <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
+                </div>
+
+                <!-- Hora -->
+                <div class="icon-wrapper">
+                  <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+                  <select name="time" id="inputHora" class="input-field" aria-label="Hora de reserva" required>
+                    <option value="">Selecciona fecha primero</option>
+                  </select>
+                  <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
+                </div>
+
+              </div>
+
+              <textarea name="message" id="inputComentarios" placeholder="¿Algún pedido especial? (Cumpleaños, aniversario...)"
+                autocomplete="off" class="input-field"></textarea>
+
+              <div class="chk-wrapper" style="display: flex; align-items: center; gap: 10px; margin-bottom: 25px; margin-top: 15px;">
+                <input type="checkbox" id="chkTerminos" required style="width: auto; height: auto; cursor: pointer; transform: scale(1.2);">
+                <label for="chkTerminos" style="font-size: 1.4rem; color: #a0aec0; cursor: pointer; user-select: none;">
+                  Acepto las políticas de reserva y el tratamiento de mis datos.
+                </label>
+              </div>
+
+              <button type="submit" id="btnReservar" class="btn btn-secondary">
+                <span class="text text-1">¡Vamos pa' lante!</span>
+                <span class="text text-2" aria-hidden="true">¡Vamos pa' lante!</span>
+              </button>
+
+            </form>
+
+            <div class="reservation-contact text-center" style="
+                  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./assets/images/form-pattern.png');
+                  background-size: cover;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center; /* Centra horizontalmente el contenido */
+                  padding: 60px 40px;  /* Aumentamos el padding vertical */
+                  color: white;
+                  gap: 25px;           /* Crea una separación uniforme entre cada bloque */
+                 ">
+
+              <h2 class="headline-1" style="margin-bottom: 10px;">Contáctanos</h2>
+
+              <!-- Sección de Reservas -->
+              <div class="contact-group">
+                <p class="contact-label"
+                  style="margin-bottom: 5px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+                  Reservas Directas</p>
+                <a href="tel:+51900000000" class="body-1 contact-number hover-underline"
+                  style="font-size: 2rem; display: block;">+51 900 000 000</a>
+              </div>
+
+              <!-- <div class="separator" style="width: 50px; height: 1px; background-color: rgba(255,255,255,0.3); margin: 10px 0;"></div> -->
+
+              <!-- Sección de Ubicación -->
+              <div class="contact-group">
+                <p class="contact-label"
+                  style="margin-bottom: 5px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+                  Ubicación</p>
+                <address class="body-4" style="line-height: 1.6; font-style: normal;">
+                  Av. Marina 1234, <br>
+                  Pueblo Libre / Callao, Lima - Perú
+                </address>
+              </div>
+
+              <!-- Sección de Horario -->
+              <div class="contact-group">
+                <p class="contact-label"
+                  style="margin-bottom: 5px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Horario
+                  de Atención</p>
+                <p class="body-4" style="line-height: 1.6;">
+                  Martes a Domingo <br>
+                  <strong>12:00 pm - 11:00 pm</strong>
+                </p>
+              </div>
+
+              <!-- Sección de Slogan -->
+              <div class="contact-group" style="margin-top: 15px;">
+                <p class="body-4 italic" style="font-style: italic; opacity: 0.9; font-size: 2.5rem;">
+                  "Acá se come de verdad, sin floro."
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+      <!-- 
+        - #FEATURES
+      -->
+
+      <section class="section features text-center" aria-label="features">
+        <div class="container">
+
+          <p class="section-subtitle label-2">¿Por qué elegirnos?</p>
+
+          <h2 class="headline-1 section-title">Nuestra Disciplina</h2>
+
+          <ul class="grid-list">
+
+            <li class="feature-item">
+              <div class="feature-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/features-icon-1.png" width="100" height="80" loading="lazy"
+                    alt="Comida de calidad">
+                </div>
+
+                <h3 class="title-2 card-title">Sabor con Punch</h3>
+
+                <p class="label-1 card-text">Ingredientes seleccionados para que cada plato sea un nocaut de sabor en tu
+                  paladar.</p>
+
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/features-icon-2.png" width="100" height="80" loading="lazy" alt="Ambiente">
+                </div>
+
+                <h3 class="title-2 card-title">Esquina con Estilo</h3>
+
+                <p class="label-1 card-text">Un ambiente urbano y auténtico, diseñado para los que buscan lo real y lo
+                  moderno.</p>
+
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/features-icon-3.png" width="100" height="80" loading="lazy" alt="Chefs">
+                </div>
+
+                <h3 class="title-2 card-title">Team de Primera</h3>
+
+                <p class="label-1 card-text">Nuestros expertos en cocina dominan el fuego y la sazón con técnica
+                  profesional.</p>
+
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/features-icon-4.png" width="100" height="80" loading="lazy" alt="Eventos">
+                </div>
+
+                <h3 class="title-2 card-title">Eventos & Juerga</h3>
+
+                <p class="label-1 card-text">Celebra tus victorias con nosotros. Armamos el mejor ambiente para tus
+                  reuniones.</p>
+
+              </div>
+            </li>
+
+          </ul>
+
+          <img src="./assets/images/shape-7.png" width="208" height="178" loading="lazy" alt="shape"
+            class="shape shape-1">
+
+          <img src="./assets/images/shape-8.png" width="120" height="115" loading="lazy" alt="shape"
+            class="shape shape-2">
+
+        </div>
+      </section>
+      <!-- Nuestros chefs-->
+
+      <section class="section features text-center" style="padding-block: 20px" aria-labelledby="chefs-label"
+        id="chefs">
+        <div class="container">
+
+          <p class="section-subtitle label-2" id="chefs-label">Expertos en Sabor</p>
+
+
+          <h2 class="headline-1 section-title">Nuestros Chefs</h2>
+
+          <ul class="grid-list">
+
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon">
+                  <img src="./assets/images/chef-1.jpg" width="94" height="80" loading="lazy" alt="Chef 1"
+                    style="object-fit: cover; object-position: center top; border-radius: 8px;">
+                </div>
+                <h3 class="title-2 card-title">Maestro de los Saltados</h3>
+                <p class="label-1 card-text">Preparando Lomo Saltado y Chaufa a fuego vivo.</p>
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon">
+                  <img src="./assets/images/chef-2.jpg" width="100" height="80" loading="lazy" alt="Chef 2">
+                </div>
+                <h3 class="title-2 card-title">Alquimista de la Barra</h3>
+                <p class="label-1 card-text">Preparando Pisco Sour tradicional y chilcanos en la barra del restobar.</p>
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon">
+                  <img src="./assets/images/chef-3.jpg" width="100" height="80" loading="lazy" alt="Chef 3">
+                </div>
+                <h3 class="title-2 card-title">Capitán de las Brasas</h3>
+                <p class="label-1 card-text">Manejando caja china y anticuchos con mucho fuego y humo de carbón.</p>
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon">
+                  <img src="./assets/images/chef-4.jpg" width="100" height="80" loading="lazy" alt="Chef 4">
+                </div>
+                <h3 class="title-2 card-title">El Bravo del Mar</h3>
+                <p class="label-1 card-text">Preparando Ceviche Clásico y Ceviche Mixto con corte preciso y mucho limón.
+                </p>
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon">
+                  <img src="./assets/images/chef-5.jpg" width="100" height="80" loading="lazy" alt="Chef 5">
+                </div>
+                <h3 class="title-2 card-title">El Guardián de las Ollas</h3>
+                <p class="label-1 card-text">Removiendo ollas grandes de Ají de Gallina y Chanfainita con sazón
+                  tradicional.
+                </p>
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon">
+                  <img src="./assets/images/chef-6.jpg" width="100" height="80" loading="lazy" alt="Chef 6">
+                </div>
+                <h3 class="title-2 card-title">Experto en Sabores Criollos</h3>
+                <p class="label-1 card-text">Preparando Bistec a lo Misio y Tacu Tacu con Lomo a lo Chihuán en sartén
+                  grande.
+                </p>
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon">
+                  <img src="./assets/images/chef-7.jpg" width="100" height="80" loading="lazy" alt="Chef 7">
+                </div>
+                <h3 class="title-2 card-title">Maestro de los Piqueos</h3>
+                <p class="label-1 card-text">Preparando tequeños de lomo fino y papas a la huancaína en estación de
+                  piqueos.
+                </p>
+              </div>
+            </li>
+
+            <li class="feature-item">
+              <div class="feature-card">
+                <div class="card-icon">
+                  <img src="./assets/images/chef-8.jpg" width="100" height="80" loading="lazy" alt="Chef 8">
+                </div>
+                <h3 class="title-2 card-title">Especialista en Sánguches</h3>
+                <p class="label-1 card-text">Armando Pan con Chicharrón, Pan con Asado y Maicelo Burguer con panes
+                  crocantes.
+                </p>
+              </div>
+            </li>
+
+          </ul>
+
+          <img src="./assets/images/shape-7.png" width="208" height="178" loading="lazy" alt="shape"
+            class="shape shape-1">
+          <img src="./assets/images/shape-8.png" width="120" height="115" loading="lazy" alt="shape"
+            class="shape shape-2">
+
+        </div>
+      </section>
+      <section class="section event bg-black-10" aria-label="event">
+        <div class="container">
+
+          <p class="section-subtitle label-2 text-center">Experiencias recientes</p>
+
+          <h2 class="section-title headline-1 text-center">Sigue la experiencia</h2>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="event-card has-before hover:shine" data-video-card>
+                <div class="card-banner img-holder" style="--width: 350; --height: 450;">
+                  <video width="350" height="450" class="img-cover video-element" preload="metadata">
+                    <source src="./assets/videos/video_1.mp4" type="video/mp4">
+                    Tu navegador no soporta el video.
+                  </video>
+                  <div class="play-btn">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                      <polygon points="5,3 19,12 5,21" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <p class="card-subtitle label-2 text-center">EXPERIENCIA, MOMENTOS</p>
+                  <h3 class="card-title title-2 text-center">
+                    Un espacio que se vive más allá de la mesa.
+                  </h3>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="event-card has-before hover:shine" data-video-card>
+                <div class="card-banner img-holder" style="--width: 350; --height: 450;">
+                  <video width="350" height="450" class="img-cover video-element" preload="metadata">
+                    <source src="./assets/videos/video_2.mp4" type="video/mp4">
+                    Tu navegador no soporta el video.
+                  </video>
+                  <div class="play-btn">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                      <polygon points="5,3 19,12 5,21" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <p class="card-subtitle label-2 text-center">Comida, sabor</p>
+                  <h3 class="card-title title-2 text-center">
+                    Sabores que despiertan todos tus sentidos.
+                  </h3>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="event-card has-before hover:shine" data-video-card>
+                <div class="card-banner img-holder" style="--width: 350; --height: 450;">
+                  <video width="350" height="450" class="img-cover video-element" preload="metadata">
+                    <source src="./assets/videos/video_3.mp4" type="video/mp4">
+                    Tu navegador no soporta el video.
+                  </video>
+                  <div class="play-btn">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                      <polygon points="5,3 19,12 5,21" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <p class="card-subtitle label-2 text-center">DISFRUTE, AMBIENTE</p>
+                  <h3 class="card-title title-2 text-center">
+                    Aquí no solo comes, disfrutas.
+                  </h3>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+
+          <a href="#" class="btn btn-primary">
+            <span class="text text-1">Descubre más</span>
+            <span class="text text-2" aria-hidden="true">Descubre más</span>
+          </a>
+
+        </div>
+      </section>
+    </article>
+  </main>
+
+
+
+
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer section has-bg-image text-center"
+    style="background-image: url('./assets/images/footer-bg.jpg')">
+    <div class="container">
+
+      <div class="footer-top grid-list">
+
+        <div class="footer-brand has-before has-after">
+
+          <a href="#" class="logo">
+            <img src="./assets/images/logomejorado1.png" width="160" height="50" loading="lazy" alt="grilli home">
+          </a>
+
+          <address class="body-4">
+            Av. Marina 1234, Pueblo Libre / Callao, Lima - Perú
+          </address>
+
+          <a href="mailto:maiceloboxer1@gmail.com" class="body-4 contact-link">maiceloboxer1@gmail.com</a>
+
+          <a href="tel:+88123123456" class="body-4 contact-link">Solicitud de Reserva : +51 900 000 000</a>
+
+          <p class="body-4">
+            Martes a Domingo <br> 12:00 pm - 11:00 pm
+          </p>
+
+          <div class="wrapper">
+            <div class="separator"></div>
+            <div class="separator"></div>
+            <div class="separator"></div>
+          </div>
+
+          <!-- <p class="title-1">Get News & Offers</p>
+
+          <p class="label-1">
+            Subscribe us & Get <span class="span">25% Off.</span>
+          </p> -->
+
+          <form action="" class="input-wrapper">
+            <div class="icon-wrapper">
+              <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+
+              <input type="email" name="email_address" placeholder="Tu email" autocomplete="off" class="input-field">
+            </div>
+
+            <button type="submit" class="btn btn-secondary">
+              <span class="text text-1">¡Causa, ven y unete!</span>
+
+              <span class="text text-2" aria-hidden="true">¡Causa, ven y unete!</span>
+            </button>
+          </form>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <a href="#home" class="label-2 footer-link hover-underline">Inicio</a>
+          </li>
+
+          <li>
+            <a href="#menu" class="label-2 footer-link hover-underline">Menus</a>
+          </li>
+
+          <li>
+            <a href="#about" class="label-2 footer-link hover-underline">Nosotros</a>
+          </li>
+
+          <li>
+            <a href="#chefs" class="label-2 footer-link hover-underline">Los Chefs</a>
+          </li>
+
+          <li>
+            <a href="#reservation" class="label-2 footer-link hover-underline">Contáctanos</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Facebook</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Instagram</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Twitter</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Youtube</a>
+          </li>
+
+          <li>
+            <a href="#" class="label-2 footer-link hover-underline">Google Map</a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" class="back-top-btn active" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - Configuración base
+  -->
+  <!-- Modal de Confirmación de Reserva -->
+  <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-hidden="true" style="display: none; background: rgba(0,0,0,0.85); z-index: 100000;">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px; margin: 1.75rem auto;">
+      <div class="modal-content" style="background-color: #0d0d14; border: 2px solid #bc9658; border-radius: 16px; color: white; padding: 25px; font-family: 'DM Sans', sans-serif; box-shadow: 0 15px 50px rgba(0,0,0,0.8);">
+        <div class="modal-header" style="border-bottom: 1px solid rgba(188, 150, 88, 0.2); padding-bottom: 15px; display: flex; justify-content: space-between; align-items: center; background: none;">
+          <h5 class="modal-title" style="font-family: 'HoboCustom', cursive; font-size: 2.2rem; color: #e5c060; margin: 0; letter-spacing: 1px;">¡Reserva Confirmada!</h5>
+          <button type="button" class="btn-close-custom" data-bs-dismiss="modal" style="background: none; border: none; color: #a0aec0; font-size: 2rem; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0aec0'">✕</button>
+        </div>
+        <div class="modal-body" style="padding: 20px 0; text-align: center;">
+          <p style="font-size: 1.6rem; margin-bottom: 20px; color: #c4c4d4;">Tu mesa ha sido reservada con éxito. Presenta este código al llegar:</p>
+          <div style="background: rgba(188, 150, 88, 0.15); border: 2px dashed #bc9658; border-radius: 10px; padding: 18px; margin-bottom: 25px; display: inline-block; width: 100%;">
+            <span id="reservaCodigo" style="font-family: 'Permanent Marker', cursive; font-size: 2.8rem; color: #ffffff; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,255,255,0.2);">MCL-XXXXXXXX</span>
+          </div>
+          <div id="reservaDetalles" style="text-align: left; background: #12121c; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 1.4rem;">
+            <!-- Se llena dinámicamente -->
+          </div>
+        </div>
+        <div class="modal-footer" style="border-top: 1px solid rgba(188, 150, 88, 0.2); padding-top: 15px; display: flex; justify-content: center; background: none;">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 12px 35px; font-weight: bold; background: linear-gradient(135deg, #e5c060, #bc9658); border: none; color: #07070a; border-radius: 8px; cursor: pointer; font-size: 1.5rem; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(229,192,96,0.3)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+            ¡Listo, voy pa' lante!
+          </button>
         </div>
       </div>
-      <div class="col-lg-7 animate-fade-up animate-delay-2">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.108826064!2d-77.03897!3d-12.09500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c39a4c3e27%3A0x8e3f80fbbfaee6e7!2sCalle%20Armando%20Blondet%20149%2C%20San%20Isidro%2015073!5e0!3m2!1ses-419!2spe!4v1700000000000!5m2!1ses-419!2spe"
-          class="maps-embed"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="Ubicación Maicelo Restobar">
-        </iframe>
-      </div>
     </div>
   </div>
-</section>
 
-<!-- ══ FOOTER ══════════════════════════════════════════════════════════ -->
-<footer id="footer">
-  <div class="container">
-    <div class="row g-4">
-      <div class="col-lg-4 col-md-6">
-        <div class="footer-logo">MAICELO<span>RESTOBAR</span></div>
-        <p class="footer-desc">Cocina peruana criolla y marina en el corazón de San Isidro. Donde la tradición se convierte en experiencia.</p>
-        <div class="social-links mt-3">
-          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-6">
-        <h6 class="footer-title">Navegación</h6>
-        <ul class="footer-links">
-          <li><a href="#hero">Inicio</a></li>
-          <li><a href="#menu">Carta</a></li>
-          <li><a href="#nosotros">Nosotros</a></li>
-          <li><a href="#reservas">Reservas</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-        </ul>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <h6 class="footer-title">Horarios</h6>
-        <ul class="footer-links">
-          <li><a href="#">Lun – Mié: 12pm – 11pm</a></li>
-          <li><a href="#">Jueves: 12pm – 11:30pm</a></li>
-          <li><a href="#">Vie – Sáb: 12pm – 12am</a></li>
-          <li><a href="#">Domingo: 12pm – 10pm</a></li>
-        </ul>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <h6 class="footer-title">Contacto</h6>
-        <ul class="footer-links">
-          <li><a href="https://wa.me/51991917732">+51 991 917 732</a></li>
-          <li><a href="mailto:info@maicelorestbar.com">info@maicelorestbar.com</a></li>
-          <li><a href="https://maps.app.goo.gl/KVWMRNe14V4zbLyf8" target="_blank">Calle Armando Blondet 149</a></li>
-          <li><a href="https://maps.app.goo.gl/KVWMRNe14V4zbLyf8" target="_blank">San Isidro, Lima</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 Maicelo Restobar. Todos los derechos reservados.</p>
-      <p>Hecho con ❤️ en Lima, Perú</p>
-    </div>
-  </div>
-</footer>
+  <script>
+    // Ruta base del proyecto — cambiar si se mueve de carpeta
+    window.__BASE_URL = '/maicelo';
+  </script>
 
-<!-- ══ MODALES ════════════════════════════════════════════════════════ -->
-<!-- Modal Confirmación Reserva -->
-<div class="modal fade" id="modalConfirmacion" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header border-0 pb-0">
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body text-center px-4 pb-4">
-        <div class="reserva-confirmada-check">✅</div>
-        <h4 class="text-gold mb-2" style="font-family:var(--font-display);">¡Reserva Confirmada!</h4>
-        <p class="text-secondary mb-3" style="font-size:0.85rem;">Tu reserva ha sido registrada exitosamente.</p>
-        <div class="reserva-codigo-badge">
-          <div style="font-size:0.65rem;letter-spacing:3px;color:var(--text-secondary);text-transform:uppercase;margin-bottom:4px;">Código de Reserva</div>
-          <div class="codigo" id="reservaCodigo">MCL-00000000-0000</div>
-        </div>
-        <div id="reservaDetalles" style="text-align:left;margin-top:1rem;"></div>
-        <p class="mt-3" style="font-size:0.78rem;color:var(--text-secondary);">
-          <i class="fab fa-whatsapp text-success me-1"></i>
-          Recibirás confirmación por WhatsApp al número ingresado.
-        </p>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn-primary-gold" data-bs-dismiss="modal">Entendido</button>
-      </div>
-    </div>
-  </div>
-</div>
+  <!-- 
+    - Bootstrap 5 Bundle JS (Necesario para modales y componentes interactivos)
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Modal Términos -->
-<div class="modal fade" id="modalTerminos" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Políticas de Reserva</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body" style="color:var(--text-secondary);font-size:0.85rem;line-height:1.8;">
-        <p>• Las reservas se confirman automáticamente mediante este sistema.</p>
-        <p>• Para cancelaciones, comunícate con <strong class="text-gold">al menos 2 horas de anticipación</strong> al +51 991 917 732.</p>
-        <p>• Mantenemos tu mesa por <strong class="text-gold">15 minutos</strong> después de la hora acordada.</p>
-        <p>• Las reservas son válidas para el número de personas indicado.</p>
-        <p>• Para grupos de más de 8 personas, contáctanos directamente por WhatsApp.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-primary-gold" data-bs-dismiss="modal">Entendido</button>
-      </div>
-    </div>
-  </div>
-</div>
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/utils.js?v=3"></script>
+  <script src="./assets/js/script.js"></script>
 
-<!-- Scroll to top -->
-<button id="scrollTop" aria-label="Volver arriba"><i class="fas fa-chevron-up"></i></button>
+  <script src="./assets/js/chat.js?v=3"></script>
+  <script src="./assets/js/menu.js?v=3"></script>
+  <script src="./assets/js/reservas.js?v=3"></script>
 
-<!-- Toast container -->
-<div class="toast-container-custom" id="toastContainer"></div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Scripts propios -->
-<script src="assets/js/main.js?v=3"></script>
-<script src="assets/js/menu.js?v=2"></script>
-<script src="assets/js/reservas.js?v=2"></script>
-<script src="assets/js/chat.js?v=2"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>
