@@ -4,7 +4,7 @@ Options -MultiViews
 # ─── Seguridad: Bloquear acceso a carpetas sensibles ───────────────────────
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /PRACTICAS/
+    RewriteBase /maicelo/
 
     # Bloquear acceso directo a /config/, /src/, /cache/, /logs/
     RewriteRule ^config/ - [F,L]
@@ -15,9 +15,9 @@ Options -MultiViews
     # Forzar index.html para rutas SPA (excepto /api/, /admin/, /assets/)
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} !^/PRACTICAS/api/
-    RewriteCond %{REQUEST_URI} !^/PRACTICAS/admin/
-    RewriteCond %{REQUEST_URI} !^/PRACTICAS/assets/
+    RewriteCond %{REQUEST_URI} !^/maicelo/api/
+    RewriteCond %{REQUEST_URI} !^/maicelo/admin/
+    RewriteCond %{REQUEST_URI} !^/maicelo/assets/
     RewriteRule ^(?!api/|admin/|assets/).*$ index.html [L]
 </IfModule>
 
@@ -33,7 +33,7 @@ Options -MultiViews
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set X-XSS-Protection "1; mode=block"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://www.google.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com https://maps.googleapis.com https://maps.gstatic.com; frame-src https://www.google.com https://maps.google.com; connect-src 'self' https://api.groq.com;"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://www.google.com https://maps.googleapis.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com https://maps.googleapis.com https://maps.gstatic.com; frame-src https://www.google.com https://maps.google.com; connect-src 'self' https://generativelanguage.googleapis.com;"
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
 
@@ -56,7 +56,7 @@ Options -MultiViews
 # ─── Tipo MIME para JSON en /api/ ──────────────────────────────────────────
 <FilesMatch "\.php$">
     <IfModule mod_rewrite.c>
-        RewriteCond %{REQUEST_URI} ^/PRACTICAS/api/
+        RewriteCond %{REQUEST_URI} ^/maicelo/api/
         RewriteRule .* - [E=RESPONSE_CONTENT_TYPE:application/json]
     </IfModule>
 </FilesMatch>

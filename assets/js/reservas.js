@@ -2,12 +2,7 @@
    MAICELO RESTOBAR — reservas.js
    ============================================================ */
 
-// C3: Escape HTML para datos del servidor antes de insertar en DOM
-function escapeHTML(str) {
-  const d = document.createElement('div');
-  d.textContent = String(str ?? '');
-  return d.innerHTML;
-}
+// escapeHTML() ahora está en utils.js
 
 let horarioRestaurante = [];
 let personasCount = 2;
@@ -77,7 +72,7 @@ function generarSlotHora(horario) {
 async function initReservas() {
   // Cargar horarios
   try {
-    const res  = await fetch('/PRACTICAS/api/horarios.php');
+    const res  = await fetch(`${BASE_URL}/api/horarios.php`);
     const data = await res.json();
     if (data.success) {
       horarioRestaurante = data.horarios;
@@ -205,7 +200,7 @@ async function enviarReserva(e) {
     // Obtener token CSRF fresco si no lo tenemos
     if (!window.csrf?.token) await window.csrf?.getToken();
 
-    const res = await fetch('/PRACTICAS/api/reservas.php', {
+    const res = await fetch(`${BASE_URL}/api/reservas.php`, {
       method:  'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -2,12 +2,7 @@
    MAICELO RESTOBAR — menu.js
    ============================================================ */
 
-// C4: Escape HTML para datos de la BD antes de insertar en DOM
-function escapeHTML(str) {
-  const d = document.createElement('div');
-  d.textContent = String(str ?? '');
-  return d.innerHTML;
-}
+// escapeHTML() ahora está en utils.js
 
 let todosLosPlatos = [];
 let todasLasCategorias = [];
@@ -137,7 +132,7 @@ async function cargarMenu() {
   if (!contenedor) return;
 
   try {
-    const res  = await fetch('/PRACTICAS/api/menu.php');
+    const res  = await fetch(`${BASE_URL}/api/menu.php`);
     const data = await res.json();
     if (!data.success) throw new Error('Error en API');
 

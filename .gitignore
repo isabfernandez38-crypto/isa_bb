@@ -1,0 +1,16 @@
+# Variables de entorno
+.env
+
+# Logs
+logs/
+*.log
+
+# Cache
+cache/
+
+# Windows
+Thumbs.db
+**/Thumbs.db
+
+# XAMPP
+xampp/

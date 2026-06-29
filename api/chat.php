@@ -176,7 +176,8 @@ function llamarGroqApi(array $payload, string $groqKey, string $apiUrl): array {
         $curlErr  = curl_error($ch);
         curl_close($ch);
 
-        if (!$curlErr && $httpCode === 200) {
+        $ok = !$curlErr && $httpCode === 200;
+        if ($ok) {
             return ['ok' => true, 'raw' => $raw];
         }
 
