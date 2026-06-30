@@ -24,3 +24,35 @@
 [2026-06-02 09:49:44][INFO] Login exitoso | context: {"email":"admin@maicelorestbar.com","user_id":1}
 [2026-06-02 14:15:05][INFO] Login exitoso | context: {"email":"admin@maicelorestbar.com","user_id":1}
 [2026-06-02 14:19:00][INFO] Logout | context: {"user_id":1}
+[2026-06-30 13:34:50][ERROR] GROQ_API_KEY no configurada en .env
+[2026-06-30 13:44:26][WARNING] Login fallido | context: {"email":"admin@maicelorestbar.com","ip":"::1"}
+[2026-06-30 13:44:32][WARNING] Login fallido | context: {"email":"admin@maicelorestbar.com","ip":"::1"}
+[2026-06-30 13:44:34][WARNING] Login fallido | context: {"email":"admin@maicelorestbar.com","ip":"::1"}
+[2026-06-30 13:44:36][WARNING] Login fallido | context: {"email":"admin@maicelorestbar.com","ip":"::1"}
+[2026-06-30 13:44:37][WARNING] Cuenta bloqueada por intentos | context: {"email":"admin@maicelorestbar.com"}
+[2026-06-30 13:44:37][WARNING] Login fallido | context: {"email":"admin@maicelorestbar.com","ip":"::1"}
+[2026-06-30 13:44:38][WARNING] Rate limit excedido | context: {"key":"login_::1","count":5,"retry_after":287}
+[2026-06-30 13:44:53][WARNING] Rate limit bloqueado | context: {"key":"login_::1","retry_after":272}
+[2026-06-30 13:45:09][WARNING] Rate limit bloqueado | context: {"key":"login_::1","retry_after":256}
+[2026-06-30 13:45:11][WARNING] Rate limit bloqueado | context: {"key":"login_::1","retry_after":254}
+[2026-06-30 13:45:11][WARNING] Rate limit bloqueado | context: {"key":"login_::1","retry_after":254}
+[2026-06-30 13:45:11][WARNING] Rate limit bloqueado | context: {"key":"login_::1","retry_after":254}
+[2026-06-30 13:45:11][WARNING] Rate limit bloqueado | context: {"key":"login_::1","retry_after":254}
+[2026-06-30 13:45:38][WARNING] Rate limit bloqueado | context: {"key":"login_::1","retry_after":227}
+[2026-06-30 13:47:28][WARNING] Rate limit bloqueado | context: {"key":"login_::1","retry_after":117}
+[2026-06-30 13:49:45][WARNING] Login bloqueado | context: {"email":"admin@maicelorestbar.com","ip":"::1"}
+[2026-06-30 13:50:01][WARNING] Login bloqueado | context: {"email":"admin@maicelorestbar.com","ip":"::1"}
+[2026-06-30 13:53:37][WARNING] Login fallido | context: {"email":"admin@maicelorestbar.com","ip":"::1"}
+[2026-06-30 13:54:42][WARNING] Login fallido | context: {"email":"admin@maicelorestbar.com","ip":"::1"}
+[2026-06-30 13:56:45][INFO] Login exitoso | context: {"email":"admin@maicelorestbar.com","user_id":1}
+[2026-06-30 13:58:22][INFO] Reserva creada | context: {"codigo":"MCL-20260630-2124","ip":"::1"}
+[2026-06-30 13:58:22][WARNING] WhatsApp: API key o instancia no configurada
+[2026-06-30 13:59:06][WARNING] WhatsApp: API key o instancia no configurada
+[2026-06-30 14:02:03][INFO] Reserva creada | context: {"codigo":"MCL-20260630-4946","ip":"::1"}
+[2026-06-30 14:02:03][WARNING] WhatsApp: API key o instancia no configurada
+[2026-06-30 14:03:25][WARNING] WhatsApp: API key o instancia no configurada
+[2026-06-30 14:05:16][INFO] Logout | context: {"user_id":1}
+[2026-06-30 14:45:37][INFO] Login exitoso | context: {"email":"admin@maicelorestbar.com","user_id":1}
+[2026-06-30 14:45:41][INFO] Logout | context: {"user_id":1}
+[2026-06-30 15:00:25][INFO] Login exitoso | context: {"email":"admin@maicelorestbar.com","user_id":1}
+[2026-06-30 15:01:20][ERROR] GROQ_API_KEY no configurada en .env
