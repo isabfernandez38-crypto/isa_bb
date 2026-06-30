@@ -1,119 +1,269 @@
-# Maicelo Restobar — Plataforma Web
+# 🍽️ Maicelo Restobar - Plataforma Web
 
-Plataforma web completa para Maicelo Restobar, San Isidro, Lima.
+Sistema web desarrollado para **Maicelo Restobar**, que permite mostrar información del restaurante, gestionar reservas, administrar el contenido desde un panel administrativo e integrar servicios externos como IA y WhatsApp.
 
-## Stack
-- **Frontend**: HTML5, CSS3, Vanilla JS ES6+, Bootstrap 5.3
-- **Backend**: PHP 8.2 (sin frameworks), PDO
-- **Base de datos**: MySQL 8 (puerto 3007 en XAMPP local)
-- **IA**: Groq API (llama3-70b-8192)
-- **WhatsApp**: Evolution API
+---
 
-## Instalación en XAMPP
+# Tecnologías utilizadas
 
-### 1. Clonar / copiar
-```
-C:\xampp\htdocs\isabel\
-```
+## Frontend
+- HTML5
+- CSS3
+- JavaScript (ES6)
+- Bootstrap 5.3
 
-### 2. Crear base de datos
+## Backend
+- PHP 8.2
+- PDO
+- Apache (XAMPP)
+
+## Base de datos
+- MySQL
+
+## Integraciones
+- Groq API (IA)
+- Evolution API (WhatsApp)
+
+---
+
+# Requisitos
+
+Antes de ejecutar el proyecto debes tener instalado:
+
+- XAMPP 8.x
+- PHP 8.2 o superior
+- MySQL
+- Git (opcional)
+- Visual Studio Code (recomendado)
+
+---
+
+# Instalación
+
+## 1. Clonar el proyecto
+
 ```bash
-# Acceder a MySQL en puerto 3007
-mysql -u root -P 3007 < database/maicelo_db.sql
-```
-O importar desde phpMyAdmin en `http://localhost/phpmyadmin`.
-
-### 3. Configurar .env
-Editar `.env` con tus valores:
-```
-DB_PORT=3007
-GROQ_API_KEY=tu_clave_aqui
-EVOLUTION_API_KEY=tu_clave_evolution
-EVOLUTION_INSTANCE=nombre_instancia
+git clone https://github.com/isabfernandez38-crypto/isa_bb.git
 ```
 
-### 4. Permisos de carpetas
-Verificar que Apache tenga permisos de escritura en:
-- `cache/`
-- `logs/`
+o descargar el ZIP desde GitHub.
 
-### 5. Verificar Apache
-- Habilitar `mod_rewrite` en `httpd.conf`
-- Asegurarse de que `.htaccess` esté activo (`AllowOverride All`)
+---
 
-## URLs de acceso
+## 2. Copiar el proyecto
 
-| URL | Descripción |
-|-----|-------------|
-| `http://localhost/isabel/` | Sitio público |
-| `http://localhost/isabel/admin/` | Panel admin |
-
-## Credenciales admin por defecto
+Copia la carpeta dentro de:
 
 ```
-Email:    admin@maicelorestbar.com
-Password: Maicelo2025!
-```
-**⚠️ Cambiar inmediatamente en producción**
-
-## Estructura
-```
-isabel/
-├── .env                    ← Variables de entorno
-├── .htaccess               ← Seguridad y rewrites
-├── index.html              ← SPA frontend
-├── config/                 ← Bootstrap y base de datos
-├── src/Core/               ← Logger, RateLimiter, CSRF, Cache, ErrorHandler
-├── src/Repository/         ← Acceso a datos PDO
-├── src/Services/           ← WhatsApp (Evolution API)
-├── api/                    ← Endpoints JSON públicos
-├── api/admin/              ← Endpoints JSON protegidos
-├── admin/                  ← Panel de administración PHP
-├── assets/css/             ← Estilos (main, animations, admin)
-├── assets/js/              ← Scripts (main, menu, reservas, chat)
-├── database/               ← SQL completo
-├── cache/                  ← Caché JSON (auto-generado)
-└── logs/                   ← Logs del sistema (auto-generado)
+C:\xampp\htdocs\
 ```
 
-## APIs disponibles
+Por ejemplo:
 
-| Endpoint | Método | Descripción |
-|----------|--------|-------------|
-| `/api/csrf.php` | GET | Obtener token CSRF |
-| `/api/menu.php` | GET | Carta completa (caché 30min) |
-| `/api/reservas.php` | GET/POST | Crear y consultar reservas |
-| `/api/chat.php` | POST | Chat con IA (Groq) |
-| `/api/horarios.php` | GET | Horarios del restaurante |
-| `/api/mesas.php` | GET | Disponibilidad de mesas |
-| `/api/admin/auth.php` | GET/POST | Login/logout admin |
-| `/api/admin/dashboard.php` | GET | Estadísticas |
-| `/api/admin/reservas.php` | GET/PUT/DELETE | Gestión reservas |
-| `/api/admin/menu.php` | GET/POST/PUT/DELETE | CRUD menú |
-| `/api/admin/mesas.php` | GET/PUT | Estado mesas |
-| `/api/admin/conversaciones.php` | GET | Historial chat IA |
-| `/api/admin/promociones.php` | GET/POST/PUT/DELETE | CRUD promociones |
+```
+C:\xampp\htdocs\maicelo\
+```
 
-## Seguridad implementada
-- CSRF tokens en formularios
-- Rate limiting por IP (archivos)
-- Sesiones HTTP-only con SameSite=Strict
-- Prepared statements PDO en todas las queries
-- Bloqueo de rutas sensibles (.env, /src/, /config/)
-- Headers de seguridad (X-Frame-Options, CSP, etc.)
-- Bcrypt costo 12 para contraseñas
-- Bloqueo de cuenta tras 5 intentos fallidos
+> Si utilizas otro nombre de carpeta, recuerda actualizar las rutas del archivo `.htaccess`.
 
-## Variables de entorno requeridas
+---
 
-| Variable | Descripción |
-|----------|-------------|
-| `DB_HOST` | Host MySQL |
-| `DB_PORT` | Puerto MySQL (3007 en XAMPP local) |
-| `DB_NAME` | Nombre de la base de datos |
-| `DB_USER` | Usuario MySQL |
-| `DB_PASS` | Contraseña MySQL |
-| `GROQ_API_KEY` | Clave API de Groq |
-| `EVOLUTION_API_URL` | URL de Evolution API |
-| `EVOLUTION_API_KEY` | Clave de Evolution API |
-| `EVOLUTION_INSTANCE` | Nombre de instancia WhatsApp |
+## 3. Iniciar XAMPP
+
+Inicia los siguientes servicios:
+
+- Apache
+- MySQL
+
+Si Apache utiliza un puerto diferente (por ejemplo **8012**), accede utilizando ese puerto.
+
+Ejemplo:
+
+```
+http://localhost:8012/maicelo/
+```
+
+---
+
+## 4. Crear la base de datos
+
+Abre phpMyAdmin
+
+```
+http://localhost/phpmyadmin
+```
+
+o
+
+```
+http://localhost:8012/phpmyadmin
+```
+
+(según tu configuración).
+
+Importa el archivo:
+
+```
+database/maicelo_db.sql
+```
+
+---
+
+## 5. Configurar el archivo .env
+
+Copia:
+
+```
+.env.example
+```
+
+como
+
+```
+.env
+```
+
+y modifica las variables.
+
+Ejemplo:
+
+```env
+DB_HOST=localhost
+DB_PORT=3307
+DB_DATABASE=maicelo_db
+DB_USERNAME=root
+DB_PASSWORD=
+
+GROQ_API_KEY=TU_API_KEY
+EVOLUTION_API_KEY=TU_API_KEY
+EVOLUTION_INSTANCE=TU_INSTANCIA
+```
+
+> Ajusta el puerto MySQL según la configuración de tu XAMPP.
+
+---
+
+# Estructura del proyecto
+
+```
+maicelo/
+│
+├── admin/
+├── api/
+├── assets/
+├── cache/
+├── config/
+├── cron/
+├── database/
+├── logs/
+├── src/
+│   ├── Core/
+│   ├── Repository/
+│   └── Services/
+│
+├── .env
+├── .env.example
+├── .htaccess
+├── index.html
+└── README.md
+```
+
+---
+
+# Acceso al sistema
+
+## Sitio web
+
+```
+http://localhost/maicelo/
+```
+
+o
+
+```
+http://localhost:8012/maicelo/
+```
+
+si Apache utiliza el puerto 8012.
+
+---
+
+## Panel administrativo
+
+```
+http://localhost/maicelo/admin/
+```
+
+---
+
+# Credenciales del administrador
+
+```
+Correo:
+admin@maicelorestbar.com
+
+Contraseña:
+Maicelo2025!
+```
+
+> Cambiar estas credenciales antes de publicar el proyecto.
+
+---
+
+# Características
+
+- Página principal del restobar.
+- Panel administrativo.
+- Gestión de reservas.
+- Gestión de horarios.
+- Gestión de menú.
+- Gestión de mensajes.
+- Integración con WhatsApp.
+- Integración con IA mediante Groq.
+- Arquitectura basada en PHP sin frameworks.
+- Acceso a datos mediante PDO.
+
+---
+
+# Seguridad
+
+El proyecto incorpora:
+
+- CSRF Protection
+- Rate Limiter
+- Error Handler
+- Sistema de Logs
+- Cache
+- Variables de entorno mediante `.env`
+
+---
+
+# Desarrollo
+
+Para contribuir al proyecto:
+
+```bash
+git clone https://github.com/isabfernandez38-crypto/isa_bb.git
+
+cd isa_bb
+```
+
+Crear una nueva rama:
+
+```bash
+git checkout -b feature/nueva-funcionalidad
+```
+
+Realizar cambios:
+
+```bash
+git add .
+git commit -m "Nueva funcionalidad"
+git push origin feature/nueva-funcionalidad
+```
+
+---
+
+# Licencia
+
+Proyecto desarrollado con fines académicos y de prácticas profesionales.
