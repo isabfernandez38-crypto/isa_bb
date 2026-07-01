@@ -47,6 +47,7 @@ class RateLimiter {
         // Resetear ventana si expiró
         if (($now - $data['window_start']) >= $windowSeconds) {
             $data = ['count' => 0, 'window_start' => $now, 'blocked_until' => 0];
+            self::writeData($key, $data);
         }
 
         // Verificar límite

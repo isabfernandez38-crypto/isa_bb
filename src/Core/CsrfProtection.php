@@ -53,8 +53,7 @@ class CsrfProtection {
                     Logger::warning('CSRF: token expirado');
                     return false;
                 }
-                // One-time use: consumir del pool
-                unset($_SESSION['csrf_tokens'][$token]);
+                // Permitir reutilización del token dentro de sus 2 horas de vigencia
                 return true;
             }
         }
@@ -67,7 +66,6 @@ class CsrfProtection {
                 return false;
             }
             if (hash_equals($_SESSION['csrf_token'], $token)) {
-                unset($_SESSION['csrf_token'], $_SESSION['csrf_token_ts']);
                 return true;
             }
         }

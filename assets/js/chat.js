@@ -189,9 +189,30 @@ async function sendMessage(text) {
   }
 }
 
+// ── Cargar Historial Existente ──────────────────────────────────────────────
+async function cargarHistorialChat() {
+  try {
+    const res = await fetch(`${BASE_URL}/api/chat.php?session_id=${sessionId}`);
+    const data = await res.json();
+    if (data.success && data.mensajes && data.mensajes.length > 0) {
+      bienvenidaVisto = true;
+      const container = document.getElementById('chatMessages');
+      if (container) container.innerHTML = '';
+      data.mensajes.forEach(m => {
+        const parts = m.created_at.split(' ');
+        const time = parts[1] ? parts[1].slice(0, 5) : '';
+        addMessage(m.contenido, m.rol === 'model' || m.rol === 'assistant' ? 'assistant' : 'user', time);
+      });
+    }
+  } catch (e) {
+    console.error('Error cargando historial de chat:', e);
+  }
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   inyectarChatHTML();
+  cargarHistorialChat();
 
   // Mostrar badge después de 5 segundos si no se ha abierto
   setTimeout(() => {

@@ -52,12 +52,12 @@
 /* ── Panel del chat ───────────────────────────────────────────── */
 .chat-panel {
   position: fixed;
-  bottom: 6rem;
+  bottom: 6.5rem;
   right: 2rem;
-  width: 380px;
+  width: 430px;
   max-width: calc(100vw - 2rem);
-  height: 520px;
-  max-height: calc(100vh - 8rem);
+  height: 600px;
+  max-height: calc(100vh - 9rem);
   background: #12121a;
   border: 1px solid rgba(201, 168, 76, 0.2);
   border-radius: 16px;
@@ -98,14 +98,14 @@
 .chat-name {
   font-weight: 600;
   color: #fff;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
 }
 
 .chat-status {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: #9a9a8a;
 }
 
@@ -156,9 +156,9 @@
 
 .chat-msg {
   max-width: 85%;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.15rem;
   border-radius: 12px;
-  font-size: 0.88rem;
+  font-size: 1.0rem;
   line-height: 1.5;
   color: #e0e0e0;
   position: relative;
@@ -181,7 +181,7 @@
 
 .chat-msg-time {
   display: block;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   margin-top: 0.4rem;
   opacity: 0.6;
 }
@@ -228,9 +228,9 @@
   background: rgba(201, 168, 76, 0.1);
   border: 1px solid rgba(201, 168, 76, 0.2);
   color: #c9a84c;
-  padding: 0.35rem 0.75rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 20px;
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
   font-family: 'DM Sans', sans-serif;
@@ -257,12 +257,12 @@
   border: 1px solid rgba(201, 168, 76, 0.15);
   border-radius: 10px;
   color: #e0e0e0;
-  padding: 0.6rem 0.8rem;
-  font-size: 0.88rem;
+  padding: 0.7rem 0.9rem;
+  font-size: 1.0rem;
   font-family: 'DM Sans', sans-serif;
   resize: none;
   outline: none;
-  max-height: 100px;
+  max-height: 120px;
   line-height: 1.4;
 }
 
@@ -303,9 +303,9 @@
   background: rgba(16, 185, 129, 0.1);
   border: 1px solid rgba(16, 185, 129, 0.3);
   border-radius: 12px;
-  padding: 1rem;
+  padding: 1.1rem;
   margin-top: 0.5rem;
-  font-size: 0.88rem;
+  font-size: 1.0rem;
   color: #e0e0e0;
 }
 

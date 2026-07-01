@@ -101,22 +101,7 @@ async function initReservas() {
     });
   }
 
-  // Contador de personas
-  const btnMenos = document.getElementById('personasMenos');
-  const btnMas   = document.getElementById('personasMas');
-  const display  = document.getElementById('personasDisplay');
-  const hidden   = document.getElementById('inputPersonas');
 
-  function actualizarPersonas() {
-    if (display) display.textContent = personasCount;
-    if (hidden)  hidden.value        = personasCount;
-    if (btnMenos) btnMenos.disabled  = personasCount <= 1;
-    if (btnMas)   btnMas.disabled    = personasCount >= 8;
-  }
-
-  btnMenos?.addEventListener('click', () => { if (personasCount > 1) { personasCount--; actualizarPersonas(); } });
-  btnMas?.addEventListener('click',   () => { if (personasCount < 8) { personasCount++; actualizarPersonas(); } });
-  actualizarPersonas();
 
   // Validación en tiempo real
   document.getElementById('inputNombre')?.addEventListener('blur', e => {
@@ -233,8 +218,8 @@ async function enviarReserva(e) {
       new bootstrap.Modal(document.getElementById('modalConfirmacion')).show();
       e.target.reset();
       personasCount = 2;
-      document.getElementById('personasDisplay').textContent = '2';
-      document.getElementById('inputPersonas').value = '2';
+      const inputPers = document.getElementById('inputPersonas');
+      if (inputPers) inputPers.value = '2';
       document.getElementById('inputHora').innerHTML = '<option value="">Selecciona la fecha primero</option>';
 
       // Renovar token CSRF

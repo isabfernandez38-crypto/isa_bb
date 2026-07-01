@@ -4,9 +4,24 @@ require_once dirname(__DIR__) . '/config/bootstrap.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+$method = $_SERVER['REQUEST_METHOD'];
+if ($method !== 'POST' && $method !== 'GET') {
     http_response_code(405);
     echo json_encode(['error' => 'Método no permitido']);
+    exit;
+}
+
+$convRepo = new ConversacionRepository();
+
+if ($method === 'GET') {
+    $sessionId = trim($_GET['session_id'] ?? '');
+    if (empty($sessionId) || !preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i', $sessionId)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'session_id inválido']);
+        exit;
+    }
+    $historial = $convRepo->obtenerHistorial($sessionId);
+    echo json_encode(['success' => true, 'mensajes' => $historial]);
     exit;
 }
 
@@ -46,11 +61,10 @@ if (empty($mensaje) || mb_strlen($mensaje) > 1000) {
 }
 
 // Guardar conversación en BD
-$convRepo = new ConversacionRepository();
 $conv     = $convRepo->crearOObtener($sessionId, $ip);
 $convId   = (int)$conv['id'];
 
-// A4: Límite de mensajes por sesión (evita costos descontrolados en Groq)
+// A4: Límite de mensajes por sesión (evita costos descontrolados en Gemini)
 $totalMensajes = $convRepo->contarMensajesDe($convId);
 if ($totalMensajes >= 100) {
     http_response_code(429);
@@ -119,36 +133,88 @@ PROMOCIONES: 2x1 Pisco Sour Lun-Jue 6pm-8pm |
 2. Tono cálido y profesional, emojis moderados 🍽️
 3. Máximo 3 párrafos por respuesta
 4. Para RESERVAR: pide nombre, fecha (DD/MM/YYYY), hora,
-   número de personas y teléfono (9 dígitos).
+   número de personas, teléfono (9 dígitos) y opcionalmente su correo electrónico.
    Cuando tengas TODOS los datos responde EXACTAMENTE así:
-   [RESERVA_LISTA|nombre|YYYY-MM-DD|HH:MM|personas|telefono]
-   Ejemplo: [RESERVA_LISTA|Juan Pérez|2025-06-15|20:00|4|987654321]
+   [RESERVA_LISTA|nombre|YYYY-MM-DD|HH:MM|personas|telefono|correo]
+   (Deja el último campo vacío si no proporcionó correo, ej: [RESERVA_LISTA|Juan Pérez|2025-06-15|20:00|4|987654321|])
 5. Para CONSULTAR reserva: pide código MCL-XXXXXXXX
 6. Si quieren atención humana: +51 991 917 732
 7. Nunca inventes información
 PROMPT;
 
+// Detectar si el usuario menciona un código de reserva e inyectar detalles reales en el prompt del sistema
+$infoReservaInyectada = "";
+if (preg_match('/MCL-\d{8}-\d{4}/i', $mensaje, $match)) {
+    try {
+        $repoRes = new ReservaRepository();
+        $res = $repoRes->buscarPorCodigo($match[0]);
+        if ($res) {
+            $estadoEsp = [
+                'pendiente'  => 'Pendiente ⏳',
+                'confirmada' => 'Confirmada ✅',
+                'cancelada'  => 'Cancelada ❌',
+                'completada' => 'Completada 🍽️',
+                'no_show'    => 'No asistió 📭'
+            ][$res['estado']] ?? $res['estado'];
+
+            $infoReservaInyectada = "\n\n=== INFORMACIÓN DE LA RESERVA ENCONTRADA EN LA BASE DE DATOS ===\n" .
+                "Código: " . $res['codigo'] . "\n" .
+                "Cliente: " . $res['nombre_cliente'] . "\n" .
+                "Teléfono: " . $res['telefono'] . "\n" .
+                "Fecha: " . date('d/m/Y', strtotime($res['fecha'])) . "\n" .
+                "Hora: " . substr($res['hora'], 0, 5) . "\n" .
+                "Personas: " . $res['num_personas'] . "\n" .
+                "Mesa: " . ($res['mesa_numero'] ? "Mesa " . $res['mesa_numero'] : "No asignada aún") . "\n" .
+                "Estado: " . $estadoEsp . "\n" .
+                "Instrucción: Usa esta información real de la base de datos para responder al usuario. Si el usuario pregunta por esta reserva, infórmale estos detalles con precisión.\n" .
+                "===========================================================\n";
+        } else {
+            $infoReservaInyectada = "\n\n=== INFORMACIÓN DE LA RESERVA ===\n" .
+                "Código: " . $match[0] . "\n" .
+                "Resultado: No se encontró ninguna reserva con este código en la base de datos. Infórmale al usuario con amabilidad que el código no existe en nuestro sistema.\n" .
+                "================================================\n";
+        }
+    } catch (\Throwable $err) {
+        Logger::error('Error buscando reserva en chat', ['msg' => $err->getMessage()]);
+    }
+}
+
 // C1: Solo leer la clave desde .env, sin fallback hardcodeado
-$groqKey = $_ENV['GROQ_API_KEY'] ?? '';
-if (empty($groqKey) || $groqKey === 'PEGAR_TU_GROQ_API_KEY_AQUI') {
-    Logger::error('GROQ_API_KEY no configurada en .env');
+$geminiKey = $_ENV['GEMINI_API_KEY'] ?? '';
+if (empty($geminiKey)) {
+    Logger::error('GEMINI_API_KEY no configurada en .env');
     http_response_code(500);
     echo json_encode(['error' => 'Chat no disponible. Contacta al administrador.']);
     exit;
 }
 
+$model   = $_ENV['GEMINI_MODEL'] ?? 'gemini-flash-latest';
+$baseUrl = rtrim($_ENV['GEMINI_API_URL'] ?? 'https://generativelanguage.googleapis.com/v1beta/models', '/');
+$apiUrl  = "{$baseUrl}/{$model}:generateContent?key={$geminiKey}";
+
+// Mapear historial al formato de Gemini Native
+$contents = [];
+foreach ($historial as $h) {
+    $role = $h['rol'] === 'assistant' ? 'model' : 'user';
+    $contents[] = [
+        'role'  => $role,
+        'parts' => [['text' => $h['contenido']]],
+    ];
+}
+
 $payload = [
-    'model'       => $_ENV['GROQ_MODEL'] ?? 'llama-3.3-70b-versatile',
-    'max_tokens'  => 800,
-    'temperature' => 0.7,
-    'messages'    => array_merge(
-        [['role' => 'system', 'content' => $systemPrompt]],
-        $messages
-    ),
+    'contents'          => $contents,
+    'systemInstruction' => [
+        'parts' => [['text' => $systemPrompt . $infoReservaInyectada]],
+    ],
+    'generationConfig'  => [
+        'maxOutputTokens' => 800,
+        'temperature'     => 0.7,
+    ],
 ];
 
-// C5: Llamada a Groq con retry y backoff exponencial (máx 3 intentos)
-function llamarGroqApi(array $payload, string $groqKey, string $apiUrl): array {
+// C5: Llamada a Gemini con retry y backoff exponencial (máx 3 intentos)
+function llamarGeminiApi(array $payload, string $apiUrl): array {
     $maxRetries = 3;
     $httpCode   = 0;
 
@@ -163,7 +229,6 @@ function llamarGroqApi(array $payload, string $groqKey, string $apiUrl): array {
             CURLOPT_POST           => true,
             CURLOPT_TIMEOUT        => 30,
             CURLOPT_HTTPHEADER     => [
-                'Authorization: Bearer ' . $groqKey,
                 'Content-Type: application/json',
             ],
             CURLOPT_POSTFIELDS     => json_encode($payload),
@@ -182,7 +247,7 @@ function llamarGroqApi(array $payload, string $groqKey, string $apiUrl): array {
         }
 
         $lastError = $curlErr ?: "HTTP {$httpCode}";
-        Logger::warning("Groq intento {$intento} fallido", ['error' => $lastError]);
+        Logger::warning("Gemini intento {$intento} fallido", ['error' => $lastError]);
 
         // No reintentar si es error de cliente (4xx) excepto 429 (rate limit)
         if ($httpCode >= 400 && $httpCode < 500 && $httpCode !== 429) {
@@ -193,19 +258,18 @@ function llamarGroqApi(array $payload, string $groqKey, string $apiUrl): array {
     return ['ok' => false, 'error' => $lastError ?? 'desconocido', 'code' => $httpCode];
 }
 
-$apiUrl    = $_ENV['GROQ_API_URL'] ?? 'https://api.groq.com/openai/v1/chat/completions';
-$resultado = llamarGroqApi($payload, $groqKey, $apiUrl);
+$resultado = llamarGeminiApi($payload, $apiUrl);
 
 if (!$resultado['ok']) {
-    Logger::error('Groq API error tras reintentos', ['error' => $resultado['error']]);
+    Logger::error('Gemini API error tras reintentos', ['error' => $resultado['error']]);
     http_response_code(500);
     echo json_encode(['error' => 'Error al contactar el asistente. Intenta de nuevo.']);
     exit;
 }
 
-$groqData  = json_decode($resultado['raw'], true);
-$respuesta = $groqData['choices'][0]['message']['content'] ?? '';
-$tokens    = $groqData['usage']['total_tokens'] ?? null;
+$geminiData = json_decode($resultado['raw'], true);
+$respuesta  = $geminiData['candidates'][0]['content']['parts'][0]['text'] ?? '';
+$tokens     = $geminiData['usageMetadata']['totalTokenCount'] ?? null;
 
 // Guardar respuesta
 $convRepo->agregarMensaje($convId, 'assistant', $respuesta, $tokens);
@@ -215,33 +279,65 @@ $reservaCreada   = false;
 $codigoReserva   = null;
 $whatsappEnviado = false;
 
-if (preg_match('/\[RESERVA_LISTA\|([^|]+)\|([^|]+)\|([^|]+)\|([^|]+)\|([^\]]+)\]/', $respuesta, $m)) {
+if (preg_match('/\[RESERVA_LISTA\|([^|]+)\|([^|]+)\|([^|]+)\|([^|]+)\|([^|]+)\|([^\]]*)\]/', $respuesta, $m)) {
     try {
         $repoRes = new ReservaRepository();
-        $reserva = $repoRes->crear([
-            'nombre_cliente' => trim($m[1]),
-            'fecha'          => trim($m[2]),
-            'hora'           => trim($m[3]),
-            'num_personas'   => (int)trim($m[4]),
-            'telefono'       => trim($m[5]),
-            'email'          => null,
-            'comentarios'    => 'Reserva creada por chat IA',
-            'origen'         => 'chat_ia',
-        ]);
-        $codigoReserva = $reserva['codigo'];
-        $reservaCreada = true;
-        $convRepo->actualizarReserva($convId, (int)$reserva['id']);
+        $nombre_cliente = trim($m[1]);
+        $fecha          = trim($m[2]);
+        $hora           = trim($m[3]);
+        $num_personas   = (int)trim($m[4]);
+        $telefono       = trim($m[5]);
+        $email          = isset($m[6]) ? trim($m[6]) : '';
+        if ($email === '') $email = null;
 
-        // C6: Enviar WhatsApp y registrar estado en respuesta
-        try {
-            $wp = new WhatsAppService();
-            $whatsappEnviado = $wp->enviarConfirmacionReserva($reserva);
-        } catch (\Throwable $we) {
-            Logger::warning('WhatsApp fallo en chat', ['msg' => $we->getMessage()]);
+        // Verificar disponibilidad en tiempo real
+        if (!$repoRes->verificarDisponibilidad($fecha, $hora, $num_personas)) {
+            $respuesta = "Disculpa, acabo de verificar la disponibilidad de mesas en tiempo real y lamentablemente ya no nos quedan mesas libres para " . $num_personas . " personas el " . date('d/m/Y', strtotime($fecha)) . " a las " . substr($hora, 0, 5) . ". ¿Podríamos intentar con otra fecha u otra hora?";
+        } else {
+            // Asignar mesa de forma automática
+            $mesaId = $repoRes->asignarMesa($fecha, $hora, $num_personas);
+
+            $reserva = $repoRes->crear([
+                'nombre_cliente' => $nombre_cliente,
+                'fecha'          => $fecha,
+                'hora'           => $hora,
+                'num_personas'   => $num_personas,
+                'telefono'       => $telefono,
+                'email'          => $email,
+                'mesa_id'        => $mesaId,
+                'comentarios'    => 'Reserva creada por chat IA',
+                'origen'         => 'chat_ia',
+            ]);
+
+            // Invalidar la caché de mesas de inmediato
+            $cache = new Cache();
+            $cache->flush();
+
+            $codigoReserva = $reserva['codigo'];
+            $reservaCreada = true;
+            $convRepo->actualizarReserva($convId, (int)$reserva['id']);
+
+            // Enviar correo de confirmación si hay email disponible
+            if (!empty($reserva['email'])) {
+                try {
+                    $emailService = new EmailService();
+                    $emailService->enviarConfirmacion($reserva);
+                } catch (\Throwable $em) {
+                    Logger::warning('Fallo al enviar correo de reserva en chat', ['msg' => $em->getMessage()]);
+                }
+            }
+
+            // Enviar WhatsApp y registrar estado en respuesta
+            try {
+                $wp = new WhatsAppService();
+                $whatsappEnviado = $wp->enviarConfirmacionReserva($reserva);
+            } catch (\Throwable $we) {
+                Logger::warning('WhatsApp fallo en chat', ['msg' => $we->getMessage()]);
+            }
+
+            $respuesta = preg_replace('/\[RESERVA_LISTA\|[^\]]+\]/', '', $respuesta);
+            $respuesta = trim($respuesta) . "\n\n✅ **Reserva confirmada**\nCódigo: **{$codigoReserva}**\n" . ($reserva['mesa_numero'] ? "Mesa asignada: **Mesa {$reserva['mesa_numero']}** 🍽️" : "");
         }
-
-        $respuesta = preg_replace('/\[RESERVA_LISTA\|[^\]]+\]/', '', $respuesta);
-        $respuesta = trim($respuesta) . "\n\n✅ **Reserva confirmada**\nCódigo: **{$codigoReserva}**";
 
     } catch (\Throwable $re) {
         Logger::error('Error creando reserva desde chat', ['msg' => $re->getMessage()]);

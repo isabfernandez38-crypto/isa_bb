@@ -147,19 +147,28 @@ if ($method === 'POST') {
         exit;
     }
 
-    // C6: Enviar WhatsApp y reportar estado
-    $whatsappEnviado = false;
-    register_shutdown_function(function () use ($reserva, $reservaRepo, &$whatsappEnviado) {
+    // Enviar correo de confirmación si el cliente ingresó su email
+    if (!empty($reserva['email'])) {
         try {
-            $ws = new WhatsAppService();
-            if ($ws->enviarConfirmacionReserva($reserva)) {
-                $reservaRepo->marcarWhatsappEnviado($reserva['id']);
-                $whatsappEnviado = true;
-            }
-        } catch (\Throwable $e) {
-            Logger::warning('WhatsApp shutdown error: ' . $e->getMessage());
+            $emailService = new EmailService();
+            $emailService->enviarConfirmacion($reserva);
+        } catch (\Throwable $em) {
+            Logger::warning('Fallo al enviar correo de reserva', ['msg' => $em->getMessage()]);
         }
-    });
+    }
+
+    // C6: Enviar WhatsApp de confirmación en tiempo real antes de enviar la respuesta JSON
+    $whatsappEnviado = false;
+    try {
+        $ws = new WhatsAppService();
+        if ($ws->enviarConfirmacionReserva($reserva)) {
+            $reservaRepo->marcarWhatsappEnviado($reserva['id']);
+            $whatsappEnviado = true;
+            $reserva['whatsapp_enviado'] = 1;
+        }
+    } catch (\Throwable $e) {
+        Logger::warning('WhatsApp send error: ' . $e->getMessage());
+    }
 
     Logger::info('Reserva creada', ['codigo' => $reserva['codigo'], 'ip' => $ip]);
 

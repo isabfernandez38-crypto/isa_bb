@@ -13,6 +13,7 @@ $categorias = $menuRepo->obtenerCategorias();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/admin.css?v=4">
+  <link rel="shortcut icon" href="../assets/images/logo-maicelo.png" type="image/png">
 </head>
 <body>
 <div class="admin-wrapper">
@@ -29,7 +30,11 @@ $categorias = $menuRepo->obtenerCategorias();
     </div>
     <div class="admin-content">
       <div class="accordion" id="menuAccordion" style="display:flex;flex-direction:column;gap:0.75rem;">
-        <div style="text-align:center;padding:2rem;color:var(--text-muted);">Cargando menú...</div>
+        <div style="text-align:center;padding:2rem;">
+          <div class="skeleton-block" style="margin-bottom:0.75rem;"></div>
+          <div class="skeleton-block" style="margin-bottom:0.75rem;"></div>
+          <div class="skeleton-block"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -100,6 +105,7 @@ $categorias = $menuRepo->obtenerCategorias();
 
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/admin-ui.js"></script>
 <script>
 const BASE = '<?= APP_URL ?>';
 
@@ -116,12 +122,16 @@ async function cargarMenu() {
   });
 
   const accordion = document.getElementById('menuAccordion');
+  if (!platos.length) {
+    accordion.innerHTML = `<div class="empty-state"><i class="fas fa-utensils"></i><div class="empty-title">Aún no hay platos en la carta</div>Agrega el primero con el botón de arriba.</div>`;
+    return;
+  }
   accordion.innerHTML = '';
   Object.entries(cats).forEach(([catId, cat]) => {
     const id = 'cat' + catId;
     const filas = cat.platos.map(p => `
       <tr>
-        <td>${p.nombre}</td>
+        <td>${escapeHTML(p.nombre)}</td>
         <td>S/ ${parseFloat(p.precio).toFixed(2)}</td>
         <td>
           <label class="toggle-switch">
@@ -168,6 +178,7 @@ async function togglePlato(id, tipo) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id, toggle: tipo }),
   });
+  toast(`${tipo === 'disponible' ? 'Disponibilidad' : 'Destacado'} actualizado`, 'success', 2000);
 }
 
 function editarPlato(p) {
@@ -186,8 +197,15 @@ function editarPlato(p) {
 }
 
 async function eliminarPlato(id, nombre) {
-  if (!confirm(`¿Eliminar "${nombre}"?`)) return;
+  const ok = await confirmDialog({
+    titulo: `¿Eliminar "${nombre}"?`,
+    mensaje: 'Este plato desaparecerá de la carta digital al toque.',
+    icono: 'fa-trash',
+    textoConfirmar: 'Sí, eliminar',
+  });
+  if (!ok) return;
   await fetch(BASE + '/api/admin/menu.php?id=' + id, { method: 'DELETE' });
+  toast(`"${nombre}" fue retirado de la carta`, 'success');
   cargarMenu();
 }
 
@@ -216,16 +234,13 @@ document.getElementById('btnGuardarPlato')?.addEventListener('click', async () =
     document.getElementById('platoId').value = '';
     document.getElementById('formPlato').reset();
     document.getElementById('modalPlatoTitulo').textContent = 'Agregar Plato';
+    toast(id ? 'Plato actualizado con sazón 👨‍🍳' : 'Plato agregado a la carta 🔥', 'success');
     cargarMenu();
   } else {
-    alert(data.error || 'Error al guardar');
+    toast(data.error || 'No se pudo guardar el plato', 'error');
   }
 });
 
-document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-  document.querySelector('.admin-sidebar')?.classList.toggle('open');
-  document.getElementById('sidebarOverlay')?.classList.toggle('active');
-});
 
 cargarMenu();
 </script>
