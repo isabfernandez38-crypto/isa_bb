@@ -1759,6 +1759,12 @@ font-family: 'HoboCustom', sans-serif !important;
     gap: 15px;
   }
 
+  /* El precio nunca se parte en dos líneas (ej: "S/ 36.00") */
+  .menu-card .title-wrapper .title-2 {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
   .menu-card .badge { margin-block-start: 0; }
 
   .menu-card .span {

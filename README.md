@@ -13,7 +13,7 @@ Plataforma web completa para Maicelo Restobar, San Isidro, Lima.
 
 ### 1. Clonar / copiar
 ```
-C:\xampp\htdocs\isabel\
+C:\xampp\htdocs\maicelo\
 ```
 
 ### 2. Crear base de datos
@@ -45,20 +45,20 @@ Verificar que Apache tenga permisos de escritura en:
 
 | URL | Descripción |
 |-----|-------------|
-| `http://localhost/isabel/` | Sitio público |
-| `http://localhost/isabel/admin/` | Panel admin |
+| `http://localhost/maicelo/` | Sitio público |
+| `http://localhost/maicelo/admin/` | Panel admin |
 
 ## Credenciales admin por defecto
 
-```
-Email:    admin@maicelorestbar.com
-Password: Maicelo2025!
-```
-**⚠️ Cambiar inmediatamente en producción**
+Las credenciales iniciales del administrador se definen al importar
+`database/maicelo_db.sql`. Consulta ese archivo (o al responsable del proyecto)
+para el usuario y contraseña por defecto.
+
+**⚠️ Cambiar la contraseña inmediatamente tras el primer acceso, sobre todo en producción.**
 
 ## Estructura
 ```
-isabel/
+maicelo/
 ├── .env                    ← Variables de entorno
 ├── .htaccess               ← Seguridad y rewrites
 ├── index.html              ← SPA frontend
@@ -83,7 +83,7 @@ isabel/
 | `/api/csrf.php` | GET | Obtener token CSRF |
 | `/api/menu.php` | GET | Carta completa (caché 30min) |
 | `/api/reservas.php` | GET/POST | Crear y consultar reservas |
-| `/api/chat.php` | POST | Chat con IA (Groq) |
+| `/api/chat.php` | POST | Chat con IA (Gemini) |
 | `/api/horarios.php` | GET | Horarios del restaurante |
 | `/api/mesas.php` | GET | Disponibilidad de mesas |
 | `/api/admin/auth.php` | GET/POST | Login/logout admin |
