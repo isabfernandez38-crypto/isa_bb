@@ -10,7 +10,7 @@ session_check();
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/admin.css?v=4">
+  <link rel="stylesheet" href="../assets/css/admin.css?v=6">
   <link rel="shortcut icon" href="../assets/images/logo-maicelo.png" type="image/png">
 </head>
 <body>
@@ -33,7 +33,7 @@ session_check();
           <span style="font-size:0.75rem;"><span style="color:var(--text-muted);">●</span> Mantenimiento</span>
         </div>
       </div>
-      <div class="mesas-grid" id="mesasGrid">
+      <div class="restaurant-floor-plan" id="mesasGrid">
         <div class="skeleton-block"></div><div class="skeleton-block"></div>
         <div class="skeleton-block"></div><div class="skeleton-block"></div>
       </div>
@@ -70,19 +70,59 @@ session_check();
 const BASE = '<?= APP_URL ?>';
 let mesaSeleccionada = null;
 
+const ZONES_ORDER = {
+  'bar': { title: '🍸 Bar', order: 1 },
+  'vip': { title: '👑 Zona VIP', order: 2 },
+  'interior': { title: '🍽️ Comedor Interior', order: 3 },
+  'exterior': { title: '🌴 Terraza / Exterior', order: 4 }
+};
+
 async function cargarMesas() {
   const res   = await fetch(BASE + '/api/admin/mesas.php');
   const data  = await res.json();
   const grid  = document.getElementById('mesasGrid');
-  grid.innerHTML = (data.mesas || []).map(m => `
-    <div class="mesa-card ${m.estado}" onclick="abrirModalMesa(${m.id}, ${m.numero}, '${m.estado}')">
-      <div class="mesa-numero">${m.numero}</div>
-      <div class="mesa-cap">${m.capacidad} pers.</div>
-      <div class="mesa-zona">${m.zona}</div>
-      <div class="mesa-estado-dot"></div>
-      <div style="font-size:0.6rem;margin-top:0.25rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;">${m.estado}</div>
-    </div>
-  `).join('');
+  
+  if (!data.mesas || data.mesas.length === 0) {
+      grid.innerHTML = '<p style="color:var(--text-muted)">No hay mesas configuradas.</p>';
+      return;
+  }
+
+  // Agrupar por zonas
+  const zonas = {};
+  data.mesas.forEach(m => {
+      const z = m.zona || 'interior';
+      if (!zonas[z]) zonas[z] = [];
+      zonas[z].push(m);
+  });
+
+  // Ordenar y construir HTML
+  let html = '';
+  const sortedZones = Object.keys(zonas).sort((a, b) => {
+      const orderA = ZONES_ORDER[a]?.order || 99;
+      const orderB = ZONES_ORDER[b]?.order || 99;
+      return orderA - orderB;
+  });
+
+  sortedZones.forEach(z => {
+      const title = ZONES_ORDER[z]?.title || z.toUpperCase();
+      
+      let mesasHtml = zonas[z].map(m => `
+        <div class="mesa-card ${m.estado}" data-cap="${m.capacidad}" onclick="abrirModalMesa(${m.id}, ${m.numero}, '${m.estado}')">
+          <div class="mesa-numero">${m.numero}</div>
+          <div class="mesa-cap">${m.capacidad} pax</div>
+          <div class="mesa-estado-dot"></div>
+        </div>
+      `).join('');
+
+      html += `
+        <div class="zone-container">
+            <div class="zone-header">${title}</div>
+            <div class="zone-grid">${mesasHtml}</div>
+        </div>
+      `;
+  });
+
+  grid.innerHTML = html;
 }
 
 function abrirModalMesa(id, numero, estado) {
