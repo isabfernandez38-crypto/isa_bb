@@ -12,7 +12,7 @@ $nombreUsuario = htmlspecialchars($_SESSION['nombre'] ?? 'Admin');
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/admin.css?v=4">
+  <link rel="stylesheet" href="../assets/css/admin.css?v=6">
   <link rel="shortcut icon" href="../assets/images/logo-maicelo.png" type="image/png">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 </head>
@@ -63,27 +63,33 @@ $nombreUsuario = htmlspecialchars($_SESSION['nombre'] ?? 'Admin');
         </div>
       </div>
 
-      <!-- Gráfico + próximas reservas -->
-      <div class="row g-3 mb-4">
-        <div class="col-lg-7">
-          <div class="chart-card">
-            <div class="chart-title"><i class="fas fa-chart-line me-2"></i>Reservas últimos 7 días</div>
-            <canvas id="chartReservas" height="90"></canvas>
+      <!-- Gráfico + Live Feed -->
+      <div class="row g-4 mb-4">
+        <!-- Ocupación y Gráfico -->
+        <div class="col-lg-7 d-flex flex-column gap-4">
+          <div class="chart-card" style="flex:1;">
+            <div class="chart-title">
+              <i class="fas fa-chart-line" style="color:var(--accent);"></i>
+              Flujo de Reservas (7 días)
+            </div>
+            <div style="position:relative; height: 200px; width:100%;">
+                <canvas id="chartReservas"></canvas>
+            </div>
           </div>
         </div>
+
+        <!-- Feed en Vivo -->
         <div class="col-lg-5">
-          <div class="admin-table-wrapper h-100">
-            <div class="admin-table-header">
-              <span class="admin-table-title">Próximas Reservas</span>
-              <a href="reservas.php" class="btn-admin-sm">Ver todas</a>
+          <div class="admin-table-wrapper h-100" style="background:var(--bg-card); padding:0;">
+            <div class="admin-table-header" style="background:transparent;">
+              <span class="admin-table-title"><i class="fas fa-bolt text-warning me-2"></i>Actividad en Vivo</span>
+              <a href="reservas.php" class="btn-admin-outline" style="padding:0.4rem 0.8rem; font-size:0.75rem;">Ir al Kanban</a>
             </div>
-            <div style="overflow-x:auto;">
-              <table class="table mb-0" id="tablaProximas">
-                <thead><tr>
-                  <th>Hora</th><th>Cliente</th><th>Pers.</th><th>Estado</th>
-                </tr></thead>
-                <tbody><?= str_repeat('<tr class="skeleton-row"><td colspan="4"><div class="skeleton-block" style="height:18px;margin:0;"></div></td></tr>', 4) ?></tbody>
-              </table>
+            <div class="activity-feed" style="padding: 1.5rem; display:flex; flex-direction:column; gap:1.2rem; max-height:280px; overflow-y:auto;" id="liveFeed">
+                <!-- Skeletons -->
+                <div class="skeleton-row"><div class="skeleton-block" style="height:25px;margin:0;"></div></div>
+                <div class="skeleton-row"><div class="skeleton-block" style="height:25px;margin:0;"></div></div>
+                <div class="skeleton-row"><div class="skeleton-block" style="height:25px;margin:0;"></div></div>
             </div>
           </div>
         </div>
@@ -147,20 +153,38 @@ async function cargarDashboard() {
       });
     }
 
-    // Próximas reservas
-    const tbody = document.querySelector('#tablaProximas tbody');
+    // Actividad en Vivo (Reemplaza las próximas reservas)
+    const feedContainer = document.getElementById('liveFeed');
     if (data.proximas_reservas?.length) {
-      const estadoClass = { pendiente:'badge-pendiente', confirmada:'badge-confirmada', cancelada:'badge-cancelada', completada:'badge-completada' };
-      tbody.innerHTML = data.proximas_reservas.map(r => `
-        <tr>
-          <td>${r.hora?.slice(0,5)}</td>
-          <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.nombre_cliente}</td>
-          <td>${r.num_personas}</td>
-          <td><span class="badge-estado ${estadoClass[r.estado]||''}">${r.estado}</span></td>
-        </tr>
-      `).join('');
+      feedContainer.innerHTML = data.proximas_reservas.map(r => {
+        let icon = r.origen === 'ia' ? 'fa-robot text-info' : 'fa-user text-warning';
+        let bg = r.estado === 'confirmada' ? 'rgba(52, 199, 123, 0.1)' : 'rgba(255, 255, 255, 0.03)';
+        let border = r.estado === 'confirmada' ? '1px solid rgba(52, 199, 123, 0.3)' : '1px solid var(--border-color)';
+        return `
+          <div style="display:flex; gap:1rem; align-items:flex-start; padding: 1rem; background: ${bg}; border: ${border}; border-radius: var(--radius-sm); transition: transform 0.2s;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--bg-dark); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <i class="fas ${icon}"></i>
+            </div>
+            <div style="flex:1;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.2rem;">
+                <strong style="color:var(--text-primary); font-size:0.95rem;">${r.nombre_cliente}</strong>
+                <span style="font-size:0.75rem; color:var(--accent); font-weight:600;">${r.hora?.slice(0,5)}</span>
+              </div>
+              <div style="font-size:0.8rem; color:var(--text-secondary); display:flex; gap:1rem; align-items:center;">
+                <span><i class="fas fa-users me-1 text-muted"></i>${r.num_personas} pax</span>
+                <span><i class="fas fa-circle me-1" style="font-size:0.4rem; color:var(--${r.estado==='confirmada'?'success':'warning'});"></i>${r.estado}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
     } else {
-      tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state" style="padding:1.5rem;"><i class="fas fa-calendar-xmark"></i><div class="empty-title" style="font-size:1rem;">Sin reservas próximas</div></div></td></tr>';
+      feedContainer.innerHTML = `
+        <div style="text-align:center; padding: 2rem 0; color:var(--text-muted);">
+          <i class="fas fa-moon mb-2" style="font-size:1.5rem; opacity:0.5;"></i>
+          <div style="font-size:0.9rem;">No hay actividad reciente</div>
+        </div>
+      `;
     }
   } catch(e) {
     console.error(e);

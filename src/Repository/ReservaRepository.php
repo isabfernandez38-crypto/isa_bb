@@ -32,6 +32,13 @@ class ReservaRepository {
         ]);
 
         $id = (int)$this->db->lastInsertId();
+        
+        // Si se asignó una mesa, actualizar el estado de la mesa a 'reservada'
+        if (!empty($data['mesa_id'])) {
+            $stmtMesa = $this->db->prepare("UPDATE mesas SET estado = 'reservada' WHERE id = :mesa_id");
+            $stmtMesa->execute([':mesa_id' => $data['mesa_id']]);
+        }
+
         return $this->buscarPorId($id);
     }
 
@@ -133,17 +140,34 @@ class ReservaRepository {
         if (!in_array($estado, $estados, true)) return false;
 
         $stmt = $this->db->prepare("UPDATE reservas SET estado = :estado WHERE id = :id");
-        return $stmt->execute([':estado' => $estado, ':id' => $id]);
+        $ok = $stmt->execute([':estado' => $estado, ':id' => $id]);
+        
+        if ($ok && in_array($estado, ['cancelada','completada','no_show'], true)) {
+            $this->liberarMesaDeReserva($id);
+        }
+        return $ok;
     }
 
     public function cancelarPorCodigo(string $codigo): bool {
-        $stmt = $this->db->prepare("
-            UPDATE reservas SET estado = 'cancelada'
-            WHERE codigo = :codigo AND estado IN ('pendiente','confirmada')
-        ");
+        $stmt = $this->db->prepare("SELECT id FROM reservas WHERE codigo = :codigo");
         $stmt->execute([':codigo' => strtoupper(trim($codigo))]);
-        return $stmt->rowCount() > 0;
+        $row = $stmt->fetch();
+        if ($row) {
+            return $this->actualizarEstado((int)$row['id'], 'cancelada');
+        }
+        return false;
     }
+    
+    private function liberarMesaDeReserva(int $reservaId): void {
+        $stmt = $this->db->prepare("SELECT mesa_id FROM reservas WHERE id = :id AND mesa_id IS NOT NULL");
+        $stmt->execute([':id' => $reservaId]);
+        $row = $stmt->fetch();
+        if ($row) {
+            $stmtMesa = $this->db->prepare("UPDATE mesas SET estado = 'disponible' WHERE id = :mesa_id");
+            $stmtMesa->execute([':mesa_id' => $row['mesa_id']]);
+        }
+    }
+
 
     public function obtenerProximas(int $limite = 10): array {
         $stmt = $this->db->prepare("
