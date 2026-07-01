@@ -627,7 +627,7 @@ transition: var(--transition-1);
   top: 0;
   left: 0;
   width: 100%;
-  padding-block: 2px;
+  padding-block: 6px;
   z-index: 4;
   transition: var(--transition-1);
   
@@ -644,7 +644,7 @@ transition: var(--transition-1);
 
 /* 3. Un detalle extra: Al hacer scroll, que se vuelva un poco más compacto */
 .header.active {
-  padding-block: 4px;
+  padding-block: 5px;
   background-color: #000; /* Negro sólido para máxima lectura al bajar */
   box-shadow: 0px 5px 25px rgba(255, 127, 0, 0.6); /* Brillo naranja al bajar (estilo Zárate) */
 }
@@ -669,6 +669,19 @@ transition: var(--transition-1);
   gap: 8px;
 }
 
+.header .logo img {
+  width: 150px;
+  height: auto;
+}
+
+.header .btn {
+  padding: 8px 25px;
+  font-size: 1.1rem;
+}
+
+.navbar-link {
+  font-size: 1.1rem;
+}
 .nav-open-btn {
   padding: 12px;
   padding-inline-end: 0;
@@ -1466,6 +1479,11 @@ textarea.input-field {
   margin-block-end: 40px;
 }
 
+.footer-brand .logo img {
+  width: 180px;
+  height: auto;
+}
+
 .footer-brand :is(.body-4, .label-1) {
   color: var(--quick-silver);
   line-height: var(--lineHeight-3);
@@ -1616,7 +1634,7 @@ font-family: 'HoboCustom', sans-serif !important;
     top: 0;
     left: 0;
     width: 100%;
-    padding-block: 5px;
+    padding-block: 4px;
     border-block-end: 1px solid var(--white-alpha-20);
     z-index: 4;
     transition: var(--transition-1);
@@ -1643,7 +1661,7 @@ font-family: 'HoboCustom', sans-serif !important;
 
   .topbar-item ion-icon { --ionicon-stroke-width: 60px; }
 
-  .topbar-item .span { font-size: var(--fontSize-label-1); }
+  .topbar-item .span { font-size: 1.7rem; }
 
   .topbar .link { transition: var(--transition-1); }
 
