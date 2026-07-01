@@ -11,6 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 }
 
 try {
+    $cache      = new Cache();
+    $cacheKey   = "menu_all";
+    $cachedData = $cache->get($cacheKey);
+
+    if ($cachedData !== null) {
+        echo json_encode($cachedData, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
     $db = Database::getInstance();
 
     $stmt = $db->query("
@@ -59,13 +68,17 @@ try {
         $agrupado[$slug][] = $p;
     }
 
-    echo json_encode([
+    $response = [
         'success'    => true,
         'total'      => count($platos),
         'categorias' => $categorias,
         'agrupado'   => $agrupado,
         'platos'     => $platos,
-    ], JSON_UNESCAPED_UNICODE);
+    ];
+
+    $cache->set($cacheKey, $response, 300);
+
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
 
 } catch (Throwable $e) {
     http_response_code(500);

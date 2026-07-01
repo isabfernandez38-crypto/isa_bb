@@ -23,6 +23,10 @@ if ($method === 'PUT') {
     }
 
     $ok = $repo->actualizarEstado($id, $estado);
+    if ($ok) {
+        $cache = new Cache();
+        $cache->flush();
+    }
     echo json_encode(['success' => $ok]);
     exit;
 }

@@ -58,6 +58,7 @@ spl_autoload_register(function (string $class): void {
         'PromocionRepository'     => BASE_DIR . '/src/Repository/PromocionRepository.php',
         // Services
         'WhatsAppService' => BASE_DIR . '/src/Services/WhatsAppService.php',
+        'EmailService'    => BASE_DIR . '/src/Services/EmailService.php',
     ];
     if (isset($map[$class]) && file_exists($map[$class])) {
         require_once $map[$class];

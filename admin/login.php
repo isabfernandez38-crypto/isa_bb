@@ -15,12 +15,13 @@ if (!empty($_SESSION['user_id'])) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/admin.css?v=4">
+  <link rel="shortcut icon" href="../assets/images/logo-maicelo.png" type="image/png">
 </head>
 <body>
 <div class="login-page">
   <div class="login-card">
     <div class="login-logo">
-      <div class="login-logo-name">MAICELO</div>
+      <img src="../assets/images/logo-maicelo.png" alt="Maicelo Logo" style="max-width: 100%; max-height: 80px; object-fit: contain; margin-bottom: 0.75rem; filter: drop-shadow(0 0 12px rgba(240,75,15,0.5));">
       <div class="login-logo-sub">RESTOBAR — ADMINISTRACIÓN</div>
     </div>
     <p class="login-title">Acceso al Panel</p>

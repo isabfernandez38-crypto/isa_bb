@@ -11,6 +11,7 @@ session_check();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/admin.css?v=4">
+  <link rel="shortcut icon" href="../assets/images/logo-maicelo.png" type="image/png">
 </head>
 <body>
 <div class="admin-wrapper">
@@ -27,7 +28,9 @@ session_check();
     </div>
     <div class="admin-content">
       <div class="row g-3" id="promoGrid">
-        <div style="text-align:center;padding:2rem;color:var(--text-muted);">Cargando...</div>
+        <div class="col-md-6 col-lg-4"><div class="skeleton-block"></div></div>
+        <div class="col-md-6 col-lg-4"><div class="skeleton-block"></div></div>
+        <div class="col-md-6 col-lg-4"><div class="skeleton-block"></div></div>
       </div>
     </div>
   </div>
@@ -73,6 +76,7 @@ session_check();
 
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/admin-ui.js"></script>
 <script>
 const BASE = '<?= APP_URL ?>';
 
@@ -82,7 +86,7 @@ async function cargarPromociones() {
   const grid = document.getElementById('promoGrid');
 
   if (!data.promociones?.length) {
-    grid.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);">Sin promociones</div>';
+    grid.innerHTML = `<div class="col-12"><div class="empty-state"><i class="fas fa-tags"></i><div class="empty-title">Sin promociones activas</div>Crea una nueva con el botón "+ Nueva Promoción".</div></div>`;
     return;
   }
 
@@ -90,11 +94,11 @@ async function cargarPromociones() {
     <div class="col-md-6 col-lg-4">
       <div style="background:var(--bg-card);border:1px solid ${p.activa?'var(--border-gold)':'rgba(85,85,80,0.3)'};border-radius:10px;padding:1.5rem;opacity:${p.activa?1:0.6};">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
-          <h5 style="font-family:var(--font-display);color:${p.activa?'var(--gold)':'var(--text-muted)'};font-size:1rem;margin:0;">${p.titulo}</h5>
-          <span class="badge-estado ${p.activa?'badge-confirmada':'badge-cancelada'}">${p.activa?'Activa':'Inactiva'}</span>
+          <h5 style="font-family:var(--font-display);color:${p.activa?'var(--gold)':'var(--text-muted)'};font-size:1rem;margin:0;">${escapeHTML(p.titulo)}</h5>
+          <span class="badge-estado ${p.activa?'badge-confirmada':'badge-cancelada'}">${escapeHTML(p.activa?'Activa':'Inactiva')}</span>
         </div>
-        <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:0.75rem;">${p.descripcion||''}</p>
-        <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:1rem;">${p.fecha_inicio} → ${p.fecha_fin}</p>
+        <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:0.75rem;">${escapeHTML(p.descripcion||'')}</p>
+        <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:1rem;">${escapeHTML(p.fecha_inicio)} → ${escapeHTML(p.fecha_fin)}</p>
         <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
           <button class="btn-admin-sm" onclick="editarPromo(${JSON.stringify(p).replace(/"/g,'&quot;')})"><i class="fas fa-edit"></i> Editar</button>
           <button class="btn-admin-sm" onclick="togglePromo(${p.id})">${p.activa?'<i class="fas fa-eye-slash"></i> Desactivar':'<i class="fas fa-eye"></i> Activar'}</button>
@@ -122,12 +126,20 @@ async function togglePromo(id) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id, toggle_activa: true }),
   });
+  toast('Estado de la promoción actualizado', 'success', 2000);
   cargarPromociones();
 }
 
 async function eliminarPromo(id, titulo) {
-  if (!confirm(`¿Eliminar "${titulo}"?`)) return;
+  const ok = await confirmDialog({
+    titulo: `¿Eliminar "${titulo}"?`,
+    mensaje: 'La promoción dejará de mostrarse a los clientes.',
+    icono: 'fa-trash',
+    textoConfirmar: 'Sí, eliminar',
+  });
+  if (!ok) return;
   await fetch(BASE + '/api/admin/promociones.php?id=' + id, { method: 'DELETE' });
+  toast(`Promoción "${titulo}" eliminada`, 'success');
   cargarPromociones();
 }
 
@@ -152,16 +164,13 @@ document.getElementById('btnGuardarPromo')?.addEventListener('click', async () =
     bootstrap.Modal.getInstance(document.getElementById('modalPromo'))?.hide();
     document.getElementById('promoId').value = '';
     document.getElementById('modalPromoTitulo').textContent = 'Nueva Promoción';
+    toast(id ? 'Promoción actualizada 🎉' : 'Promoción creada, a venderla 🔥', 'success');
     cargarPromociones();
   } else {
-    alert(data.error || 'Error al guardar');
+    toast(data.error || 'No se pudo guardar la promoción', 'error');
   }
 });
 
-document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-  document.querySelector('.admin-sidebar')?.classList.toggle('open');
-  document.getElementById('sidebarOverlay')?.classList.toggle('active');
-});
 
 cargarPromociones();
 </script>

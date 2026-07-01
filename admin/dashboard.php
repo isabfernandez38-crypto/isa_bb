@@ -13,6 +13,7 @@ $nombreUsuario = htmlspecialchars($_SESSION['nombre'] ?? 'Admin');
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/admin.css?v=4">
+  <link rel="shortcut icon" href="../assets/images/logo-maicelo.png" type="image/png">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -39,25 +40,25 @@ $nombreUsuario = htmlspecialchars($_SESSION['nombre'] ?? 'Admin');
         <div class="col-6 col-lg-3">
           <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
-            <div><div class="stat-value" id="statHoy">–</div><div class="stat-label">Reservas Hoy</div></div>
+            <div><div class="stat-value" id="statHoy"><span class="skeleton-block" style="width:40px;height:22px;margin:0;display:inline-block;"></span></div><div class="stat-label">Reservas Hoy</div></div>
           </div>
         </div>
         <div class="col-6 col-lg-3">
           <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-calendar-week"></i></div>
-            <div><div class="stat-value" id="statSemana">–</div><div class="stat-label">Esta Semana</div></div>
+            <div><div class="stat-value" id="statSemana"><span class="skeleton-block" style="width:40px;height:22px;margin:0;display:inline-block;"></span></div><div class="stat-label">Esta Semana</div></div>
           </div>
         </div>
         <div class="col-6 col-lg-3">
           <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-chair"></i></div>
-            <div><div class="stat-value" id="statMesas">–</div><div class="stat-label">Mesas Libres</div></div>
+            <div><div class="stat-value" id="statMesas"><span class="skeleton-block" style="width:40px;height:22px;margin:0;display:inline-block;"></span></div><div class="stat-label">Mesas Libres</div></div>
           </div>
         </div>
         <div class="col-6 col-lg-3">
           <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-robot"></i></div>
-            <div><div class="stat-value" id="statConv">–</div><div class="stat-label">Chat IA Hoy</div></div>
+            <div><div class="stat-value" id="statConv"><span class="skeleton-block" style="width:40px;height:22px;margin:0;display:inline-block;"></span></div><div class="stat-label">Chat IA Hoy</div></div>
           </div>
         </div>
       </div>
@@ -81,7 +82,7 @@ $nombreUsuario = htmlspecialchars($_SESSION['nombre'] ?? 'Admin');
                 <thead><tr>
                   <th>Hora</th><th>Cliente</th><th>Pers.</th><th>Estado</th>
                 </tr></thead>
-                <tbody><tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">Cargando...</td></tr></tbody>
+                <tbody><?= str_repeat('<tr class="skeleton-row"><td colspan="4"><div class="skeleton-block" style="height:18px;margin:0;"></div></td></tr>', 4) ?></tbody>
               </table>
             </div>
           </div>
@@ -94,6 +95,7 @@ $nombreUsuario = htmlspecialchars($_SESSION['nombre'] ?? 'Admin');
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/admin-ui.js"></script>
 <script>
 const BASE = '<?= APP_URL ?>';
 let chart = null;
@@ -158,9 +160,12 @@ async function cargarDashboard() {
         </tr>
       `).join('');
     } else {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);">Sin reservas próximas</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state" style="padding:1.5rem;"><i class="fas fa-calendar-xmark"></i><div class="empty-title" style="font-size:1rem;">Sin reservas próximas</div></div></td></tr>';
     }
-  } catch(e) { console.error(e); }
+  } catch(e) {
+    console.error(e);
+    toast('No se pudo cargar el dashboard 😕', 'error');
+  }
 }
 
 // Auto-refresh cada 30s

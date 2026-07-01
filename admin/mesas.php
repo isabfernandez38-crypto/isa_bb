@@ -11,6 +11,7 @@ session_check();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/admin.css?v=4">
+  <link rel="shortcut icon" href="../assets/images/logo-maicelo.png" type="image/png">
 </head>
 <body>
 <div class="admin-wrapper">
@@ -33,7 +34,8 @@ session_check();
         </div>
       </div>
       <div class="mesas-grid" id="mesasGrid">
-        <div style="color:var(--text-muted);">Cargando...</div>
+        <div class="skeleton-block"></div><div class="skeleton-block"></div>
+        <div class="skeleton-block"></div><div class="skeleton-block"></div>
       </div>
     </div>
   </div>
@@ -63,6 +65,7 @@ session_check();
 
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/admin-ui.js"></script>
 <script>
 const BASE = '<?= APP_URL ?>';
 let mesaSeleccionada = null;
@@ -100,10 +103,6 @@ document.getElementById('btnActualizarMesa')?.addEventListener('click', async ()
   cargarMesas();
 });
 
-document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-  document.querySelector('.admin-sidebar')?.classList.toggle('open');
-  document.getElementById('sidebarOverlay')?.classList.toggle('active');
-});
 
 cargarMesas();
 </script>

@@ -11,6 +11,7 @@ session_check();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/admin.css?v=4">
+  <link rel="shortcut icon" href="../assets/images/logo-maicelo.png" type="image/png">
 </head>
 <body>
 <div class="admin-wrapper">
@@ -48,9 +49,7 @@ session_check();
               <th>Fecha</th><th>Hora</th><th>Pers.</th>
               <th>Mesa</th><th>Estado</th><th>Origen</th><th>Acciones</th>
             </tr></thead>
-            <tbody id="tbodyReservas">
-              <tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--text-muted);">Cargando...</td></tr>
-            </tbody>
+            <tbody id="tbodyReservas"></tbody>
           </table>
         </div>
         <div class="d-flex justify-content-between align-items-center p-3">
@@ -75,14 +74,42 @@ session_check();
 
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/admin-ui.js"></script>
 <script>
 const BASE = '<?= APP_URL ?>';
 let paginaActual = 1;
 let datosActuales = [];
+const codigosConocidos = new Set();
 const estadoClass = { pendiente:'badge-pendiente',confirmada:'badge-confirmada',cancelada:'badge-cancelada',completada:'badge-completada',no_show:'badge-no_show' };
 
-async function cargarReservas(pagina = 1) {
+function playNotificationSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.15);
+    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.3);
+    
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
+    
+    osc.start();
+    osc.stop(ctx.currentTime + 0.6);
+  } catch (e) {
+    console.error('AudioContext fail:', e);
+  }
+}
+
+async function cargarReservas(pagina = 1, silencioso = false) {
   paginaActual = pagina;
+  if (!silencioso) {
+    document.getElementById('tbodyReservas').innerHTML = skeletonRows(10, 5);
+  }
   const fecha    = document.getElementById('filtroFecha').value;
   const estado   = document.getElementById('filtroEstado').value;
   const busqueda = document.getElementById('filtroBusqueda').value;
@@ -93,11 +120,30 @@ async function cargarReservas(pagina = 1) {
 
   const res  = await fetch(BASE + '/api/admin/reservas.php?' + params);
   const data = await res.json();
-  datosActuales = data.data || [];
+  
+  const nuevasReservas = data.data || [];
+  const esPrimeraCarga = (codigosConocidos.size === 0);
+  let hayNueva = false;
+
+  nuevasReservas.forEach(r => {
+    if (!codigosConocidos.has(r.codigo)) {
+      codigosConocidos.add(r.codigo);
+      if (!esPrimeraCarga) {
+        hayNueva = true;
+      }
+    }
+  });
+
+  if (hayNueva) {
+    playNotificationSound();
+    toast('¡Nueva reserva recibida! 📅', 'success');
+  }
+
+  datosActuales = nuevasReservas;
 
   const tbody = document.getElementById('tbodyReservas');
   if (!datosActuales.length) {
-    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--text-muted);">Sin resultados</td></tr>';
+    tbody.innerHTML = `<tr><td colspan="10"><div class="empty-state"><i class="fas fa-calendar-xmark"></i><div class="empty-title">Sin reservas por aquí, causa</div>Ajusta los filtros o espera a que lleguen por WhatsApp.</div></td></tr>`;
     document.getElementById('totalReservas').textContent = '';
     document.getElementById('paginacion').innerHTML = '';
     return;
@@ -105,15 +151,15 @@ async function cargarReservas(pagina = 1) {
 
   tbody.innerHTML = datosActuales.map(r => `
     <tr>
-      <td style="font-family:monospace;font-size:0.78rem;color:var(--gold);">${r.codigo}</td>
-      <td>${r.nombre_cliente}</td>
-      <td>${r.telefono}</td>
-      <td>${r.fecha}</td>
-      <td>${r.hora?.slice(0,5)}</td>
-      <td>${r.num_personas}</td>
-      <td>${r.mesa_numero ? 'Mesa '+r.mesa_numero : '–'}</td>
-      <td><span class="badge-estado ${estadoClass[r.estado]||''}">${r.estado}</span></td>
-      <td style="font-size:0.75rem;color:var(--text-muted);">${r.origen}</td>
+      <td style="font-family:monospace;font-size:0.78rem;color:var(--gold);">${escapeHTML(r.codigo)}</td>
+      <td>${escapeHTML(r.nombre_cliente)}</td>
+      <td>${escapeHTML(r.telefono)}</td>
+      <td>${escapeHTML(r.fecha)}</td>
+      <td>${escapeHTML(r.hora?.slice(0,5))}</td>
+      <td>${escapeHTML(r.num_personas)}</td>
+      <td>${r.mesa_numero ? 'Mesa '+escapeHTML(r.mesa_numero) : '–'}</td>
+      <td><span class="badge-estado ${estadoClass[r.estado]||''}">${escapeHTML(r.estado)}</span></td>
+      <td style="font-size:0.75rem;color:var(--text-muted);">${escapeHTML(r.origen)}</td>
       <td>
         <div class="d-flex gap-1 flex-wrap">
           ${r.estado==='pendiente'?`<button class="btn-admin-sm" onclick="cambiarEstado(${r.id},'confirmada')"><i class="fas fa-check"></i></button>`:''}
@@ -136,35 +182,49 @@ async function cargarReservas(pagina = 1) {
   document.getElementById('paginacion').innerHTML = pags;
 }
 
+const ESTADO_LABEL = { confirmada:'Confirmada', cancelada:'Cancelada', completada:'Completada', pendiente:'Pendiente', no_show:'No Show' };
+
 async function cambiarEstado(id, estado) {
-  if (!confirm(`¿Cambiar estado a "${estado}"?`)) return;
+  const ok = await confirmDialog({
+    titulo: `¿Cambiar a "${ESTADO_LABEL[estado] || estado}"?`,
+    mensaje: 'El cliente verá este nuevo estado en su seguimiento de reserva.',
+    icono: estado === 'cancelada' ? 'fa-ban' : 'fa-circle-check',
+    textoConfirmar: 'Sí, cambiar',
+    peligroso: estado === 'cancelada',
+  });
+  if (!ok) return;
+
   const res = await fetch(BASE + '/api/admin/reservas.php', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id, estado }),
   });
   const data = await res.json();
-  if (data.success) cargarReservas(paginaActual);
-  else alert('Error al actualizar');
+  if (data.success) {
+    toast(`Reserva actualizada a <strong>${ESTADO_LABEL[estado] || estado}</strong> 🥊`, 'success');
+    cargarReservas(paginaActual);
+  } else {
+    toast(data.error || 'No se pudo actualizar la reserva', 'error');
+  }
 }
 
 function verDetalle(id) {
   const r = datosActuales.find(x => x.id == id);
   if (!r) return;
   document.getElementById('detalleContenido').innerHTML = `
-    <div class="reserva-codigo-badge"><div class="codigo">${r.codigo}</div></div>
-    <div class="reserva-detail-row"><span class="key">Cliente</span><span class="val">${r.nombre_cliente}</span></div>
-    <div class="reserva-detail-row"><span class="key">Teléfono</span><span class="val">${r.telefono}</span></div>
-    <div class="reserva-detail-row"><span class="key">Email</span><span class="val">${r.email||'–'}</span></div>
-    <div class="reserva-detail-row"><span class="key">Fecha</span><span class="val">${r.fecha}</span></div>
-    <div class="reserva-detail-row"><span class="key">Hora</span><span class="val">${r.hora?.slice(0,5)}</span></div>
-    <div class="reserva-detail-row"><span class="key">Personas</span><span class="val">${r.num_personas}</span></div>
-    <div class="reserva-detail-row"><span class="key">Mesa</span><span class="val">${r.mesa_numero?'Mesa '+r.mesa_numero:'Sin asignar'}</span></div>
-    <div class="reserva-detail-row"><span class="key">Estado</span><span class="val"><span class="badge-estado ${estadoClass[r.estado]||''}">${r.estado}</span></span></div>
-    <div class="reserva-detail-row"><span class="key">Origen</span><span class="val">${r.origen}</span></div>
+    <div class="reserva-codigo-badge"><div class="codigo">${escapeHTML(r.codigo)}</div></div>
+    <div class="reserva-detail-row"><span class="key">Cliente</span><span class="val">${escapeHTML(r.nombre_cliente)}</span></div>
+    <div class="reserva-detail-row"><span class="key">Teléfono</span><span class="val">${escapeHTML(r.telefono)}</span></div>
+    <div class="reserva-detail-row"><span class="key">Email</span><span class="val">${escapeHTML(r.email||'–')}</span></div>
+    <div class="reserva-detail-row"><span class="key">Fecha</span><span class="val">${escapeHTML(r.fecha)}</span></div>
+    <div class="reserva-detail-row"><span class="key">Hora</span><span class="val">${escapeHTML(r.hora?.slice(0,5))}</span></div>
+    <div class="reserva-detail-row"><span class="key">Personas</span><span class="val">${escapeHTML(r.num_personas)}</span></div>
+    <div class="reserva-detail-row"><span class="key">Mesa</span><span class="val">${r.mesa_numero?'Mesa '+escapeHTML(r.mesa_numero):'Sin asignar'}</span></div>
+    <div class="reserva-detail-row"><span class="key">Estado</span><span class="val"><span class="badge-estado ${estadoClass[r.estado]||''}">${escapeHTML(r.estado)}</span></span></div>
+    <div class="reserva-detail-row"><span class="key">Origen</span><span class="val">${escapeHTML(r.origen)}</span></div>
     <div class="reserva-detail-row"><span class="key">WhatsApp</span><span class="val">${r.whatsapp_enviado?'✅ Enviado':'⏳ Pendiente'}</span></div>
-    ${r.comentarios?`<div class="reserva-detail-row"><span class="key">Comentarios</span><span class="val">${r.comentarios}</span></div>`:''}
-    <div class="reserva-detail-row"><span class="key">Creada</span><span class="val">${r.created_at}</span></div>
+    ${r.comentarios?`<div class="reserva-detail-row"><span class="key">Comentarios</span><span class="val">${escapeHTML(r.comentarios)}</span></div>`:''}
+    <div class="reserva-detail-row"><span class="key">Creada</span><span class="val">${escapeHTML(r.created_at)}</span></div>
   `;
   new bootstrap.Modal(document.getElementById('modalDetalle')).show();
 }
@@ -182,21 +242,19 @@ function exportarCSV() {
   const a    = document.createElement('a');
   a.href = url; a.download = 'reservas_maicelo.csv';
   a.click(); URL.revokeObjectURL(url);
+  toast('CSV descargado con todo el sabor 📋', 'success');
 }
 
 document.getElementById('btnFiltrar')?.addEventListener('click', () => cargarReservas(1));
 document.getElementById('btnExportarCSV')?.addEventListener('click', exportarCSV);
 document.getElementById('filtroBusqueda')?.addEventListener('keypress', e => { if (e.key==='Enter') cargarReservas(1); });
-document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-  document.querySelector('.admin-sidebar')?.classList.toggle('open');
-  document.getElementById('sidebarOverlay')?.classList.toggle('active');
-});
-document.getElementById('sidebarOverlay')?.addEventListener('click', () => {
-  document.querySelector('.admin-sidebar')?.classList.remove('open');
-  document.getElementById('sidebarOverlay')?.classList.remove('active');
-});
 
 cargarReservas();
+
+// Auto-refresh silencioso cada 10 segundos
+setInterval(() => {
+  cargarReservas(paginaActual, true);
+}, 10000);
 </script>
 </body>
 </html>

@@ -22,6 +22,7 @@ class Database {
                     PDO::ATTR_EMULATE_PREPARES   => false,
                     PDO::MYSQL_ATTR_FOUND_ROWS   => true,
                 ]);
+                self::$instance->exec("SET time_zone = '-05:00'");
             } catch (PDOException $e) {
                 // Logger puede no estar disponible aún, usar error_log como fallback
                 if (class_exists('Logger')) {
