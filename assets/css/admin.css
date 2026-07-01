@@ -1461,3 +1461,88 @@ body {
   box-shadow: 0 4px 18px rgba(255, 7, 58, 0.4);
 }
 
+/* ── Botones de acción en tarjeta Kanban ───────────────────────── */
+.k-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.k-confirm-btn,
+.k-reject-btn {
+  flex: 1;
+  padding: 0.5rem 0.6rem;
+  border-radius: var(--radius-sm, 8px);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  transition: all 0.2s ease;
+}
+
+.k-confirm-btn {
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+}
+
+.k-confirm-btn:hover {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-color: transparent;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+.k-reject-btn {
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.10);
+  color: #f87171;
+}
+
+.k-reject-btn:hover {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-color: transparent;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+.k-confirm-btn:active,
+.k-reject-btn:active {
+  transform: translateY(0);
+}
+
+/* ── Modal: Detalle de Reserva (etiqueta / valor) ──────────────── */
+.reserva-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.2rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.reserva-detail-row:last-child {
+  border-bottom: none;
+}
+
+.reserva-detail-row .key {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  flex-shrink: 0;
+}
+
+.reserva-detail-row .val {
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: right;
+  word-break: break-word;
+}
+

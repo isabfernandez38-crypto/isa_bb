@@ -10,7 +10,7 @@ session_check();
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/admin.css?v=6">
+  <link rel="stylesheet" href="../assets/css/admin.css?v=9">
   <link rel="shortcut icon" href="../assets/images/logo-maicelo.png" type="image/png">
 </head>
 <body>
@@ -54,7 +54,16 @@ session_check();
                 <div class="kanban-body" id="col-confirmada" data-estado="confirmada"></div>
             </div>
 
-            <!-- Historico (Completadas/Canceladas) -->
+            <!-- Canceladas / Rechazadas -->
+            <div class="kanban-column">
+                <div class="kanban-header">
+                    <span class="kanban-title"><i class="fas fa-ban" style="color:var(--danger);"></i> Canceladas</span>
+                    <span class="kanban-count" id="count-cancelada">0</span>
+                </div>
+                <div class="kanban-body" id="col-cancelada" data-estado="cancelada"></div>
+            </div>
+
+            <!-- Historico (Completadas) -->
             <div class="kanban-column">
                 <div class="kanban-header">
                     <span class="kanban-title"><i class="fas fa-history" style="color:var(--text-muted);"></i> Historial</span>
@@ -119,6 +128,7 @@ async function cargarReservas(silencioso = false) {
   if (!silencioso) {
     document.getElementById('col-pendiente').innerHTML = '<div class="text-center p-3"><div class="spinner-border text-info spinner-border-sm"></div></div>';
     document.getElementById('col-confirmada').innerHTML = '<div class="text-center p-3"><div class="spinner-border text-success spinner-border-sm"></div></div>';
+    document.getElementById('col-cancelada').innerHTML = '<div class="text-center p-3"><div class="spinner-border text-danger spinner-border-sm"></div></div>';
     document.getElementById('col-historial').innerHTML = '<div class="text-center p-3"><div class="spinner-border text-secondary spinner-border-sm"></div></div>';
   }
   
@@ -167,21 +177,64 @@ function createCardHTML(r) {
         <span><i class="fas fa-chair"></i>${r.mesa_numero ? escapeHTML(r.mesa_numero) : '–'}</span>
         ${r.origen === 'ia' ? '<span><i class="fas fa-robot text-info"></i>IA</span>' : ''}
       </div>
+      ${r.estado === 'pendiente' ? `
+      <div class="k-card-actions">
+        <button class="k-confirm-btn" onclick="event.stopPropagation(); confirmarReserva(${r.id})"><i class="fas fa-check"></i> Confirmar</button>
+        <button class="k-reject-btn" onclick="event.stopPropagation(); rechazarReserva(${r.id})"><i class="fas fa-times"></i> Rechazar</button>
+      </div>` : ''}
     </div>
   `;
+}
+
+async function cambiarEstadoReserva(id, estado, mensajeOk) {
+  try {
+    const res = await fetch(BASE + '/api/admin/reservas.php', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id, estado: estado }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      toast(mensajeOk, 'success');
+      cargarReservas(true);
+    } else {
+      toast(data.error || 'Error al actualizar la reserva', 'error');
+    }
+  } catch (err) {
+    toast('No se pudo conectar con el servidor', 'error');
+  }
+}
+
+function confirmarReserva(id) {
+  cambiarEstadoReserva(id, 'confirmada', 'Reserva <strong>confirmada</strong> ✅');
+}
+
+async function rechazarReserva(id) {
+  const ok = await confirmDialog({
+    titulo: 'Rechazar Reserva',
+    mensaje: '¿Seguro que deseas rechazar esta reserva?',
+    icono: 'fa-ban',
+    textoConfirmar: 'Sí, rechazar',
+    textoCancelar: 'Cancelar'
+  });
+  if (!ok) return;
+  cambiarEstadoReserva(id, 'cancelada', 'Reserva <strong>rechazada</strong> 🚫');
 }
 
 function renderKanban(reservas) {
   const pendientes = reservas.filter(r => r.estado === 'pendiente');
   const confirmadas = reservas.filter(r => r.estado === 'confirmada');
-  const historial = reservas.filter(r => ['completada', 'cancelada', 'no_show'].includes(r.estado));
+  const canceladas = reservas.filter(r => ['cancelada', 'no_show'].includes(r.estado));
+  const historial = reservas.filter(r => r.estado === 'completada');
 
   document.getElementById('col-pendiente').innerHTML = pendientes.map(createCardHTML).join('') || '<div class="text-center text-muted p-4" style="font-size:0.8rem">No hay nuevas reservas</div>';
   document.getElementById('col-confirmada').innerHTML = confirmadas.map(createCardHTML).join('') || '<div class="text-center text-muted p-4" style="font-size:0.8rem">No hay confirmadas</div>';
+  document.getElementById('col-cancelada').innerHTML = canceladas.map(createCardHTML).join('') || '<div class="text-center text-muted p-4" style="font-size:0.8rem">No hay canceladas</div>';
   document.getElementById('col-historial').innerHTML = historial.map(createCardHTML).join('') || '<div class="text-center text-muted p-4" style="font-size:0.8rem">El historial está vacío</div>';
 
   document.getElementById('count-pendiente').textContent = pendientes.length;
   document.getElementById('count-confirmada').textContent = confirmadas.length;
+  document.getElementById('count-cancelada').textContent = canceladas.length;
   document.getElementById('count-historial').textContent = historial.length;
 
   initSortable();
@@ -196,6 +249,7 @@ function initSortable() {
   const cols = [
     document.getElementById('col-pendiente'),
     document.getElementById('col-confirmada'),
+    document.getElementById('col-cancelada'),
     document.getElementById('col-historial')
   ];
 

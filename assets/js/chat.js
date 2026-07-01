@@ -22,13 +22,13 @@ function inyectarChatHTML() {
   const html = `
     <div id="chatBubble" class="chat-bubble" role="button" aria-label="Abrir chat">
       <div class="chat-unread-badge" id="chatBadge">1</div>
-      <i class="fas fa-robot"></i>
+      <img src="${BASE_URL}/assets/images/logomejorado1.png" alt="Maicelo" class="chat-bubble-img">
     </div>
 
     <div id="chatPanel" class="chat-panel" style="display:none;" role="dialog" aria-label="Chat Maicelo IA">
       <div class="chat-header">
         <div class="chat-header-info">
-          <div class="chat-avatar">🍽️</div>
+          <div class="chat-avatar"><img src="${BASE_URL}/assets/images/logomejorado1.png" alt="Maicelo" class="chat-avatar-img"></div>
           <div>
             <div class="chat-name">Maicelo IA</div>
             <div class="chat-status"><span class="status-dot"></span> En línea</div>
